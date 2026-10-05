@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>a{color:#004E64}a:hover{color:#00303D}button,textarea{font:inherit;color:inherit}button:focus-visible,textarea:focus-visible{outline:2px solid #004E64;outline-offset:2px}</style>
+<style>
+.agency-console{box-sizing:border-box;width:min(1280px,100%);height:min(820px,100vh);min-height:620px;overflow:hidden;display:grid;grid-template-columns:240px minmax(0,1fr);border-radius:20px;background:#FAF7F2;color:#10262D;font-family:'Plus Jakarta Sans',system-ui,sans-serif;box-shadow:0 30px 60px -24px rgba(16,38,45,.4)}
+.console-sidebar{display:flex;flex-direction:column;gap:22px;padding:24px 14px;background:#00303D;color:#fff}
+.console-sidebar-brand{display:flex;flex-direction:column;gap:4px;padding:0 10px}
+.console-sidebar-brand strong{font-size:18px}
+.console-sidebar-brand span{font-size:11px;color:#9FC6CE}
+.console-nav{display:flex;flex-direction:column;gap:16px}
+.console-nav-group{display:flex;flex-direction:column;gap:4px}
+.console-nav-heading{padding:0 12px 5px;color:#9FC6CE;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.console-nav-item{box-sizing:border-box;width:100%;height:40px;padding:0 10px!important;border-radius:11px!important;font-size:11px!important;transition:background .18s ease,box-shadow .18s ease}
+.console-nav-item.active{box-shadow:inset 3px 0 #FF8A61}
+.console-nav-item span:first-of-type{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.console-agent{margin-top:auto;padding:0 10px;color:#9FC6CE;font-size:10px;line-height:1.5}
+.console-main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.console-view{display:flex;flex:1;flex-direction:column;gap:14px;min-height:0;overflow-y:auto;padding:22px 26px}
+.tower-header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.tower-heading{display:flex;flex-direction:column;gap:5px;min-width:0}
+.tower-heading-line{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.tower-heading h1,.feedback-heading h1,.duty-heading h1{margin:0;font-size:25px;font-weight:800;letter-spacing:-.035em}
+.tower-heading p,.feedback-heading p{margin:0;color:#65777A;font-size:10px;line-height:1.4}
+.console-phase{display:inline-flex;align-items:center;min-height:19px;padding:0 7px;border-radius:6px;background:#E8E3DA;color:#536467;font-size:8px;font-weight:800}
+.tower-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.tower-kpi{display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid #fff;border-radius:13px;background:#F7F3EC;box-shadow:3px 3px 8px #ded8ce,-3px -3px 8px #fffdf8}
+.tower-kpi-icon{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:10px;background:#E6F1F1;color:#075B6D;font-size:15px}
+.tower-kpi-copy{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tower-kpi-copy strong{font-size:16px;line-height:1}
+.tower-kpi-copy span{color:#65777A;font-size:8px;white-space:nowrap}
+.tower-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(360px,.8fr);gap:14px}
+.tower-list{display:flex;flex-direction:column;gap:6px;min-width:0;overflow-y:auto}
+.tower-list-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0 7px;background:#FAF7F2}
+.tower-list-title{display:flex;flex-direction:column;gap:2px}
+.tower-list-title strong{font-size:11px}
+.tower-list-title span{color:#748486;font-size:8px}
+.tower-filters{display:flex;gap:4px;padding:3px;border:1px solid #E4DFD6;border-radius:99px;background:#F0ECE4}
+.tower-filter{min-height:25px;padding:0 8px;border:0;border-radius:99px;background:transparent;color:#637477;font-size:8px;font-weight:800;cursor:pointer}
+.tower-filter[aria-pressed="true"]{background:#fff;color:#075B6D;box-shadow:0 1px 4px #10262d18}
+.console-case-row{width:100%;min-height:58px;transition:background .15s ease,box-shadow .15s ease}
+.console-case-row[aria-pressed="true"]{box-shadow:inset 3px 0 #FF6B35,0 2px 7px #10262d0a}
+.console-detail-panel{min-width:0}
+.tower-empty{display:flex;flex-direction:column;align-items:center;gap:5px;padding:24px;border:1px dashed #D9D3C8;border-radius:14px;color:#637477;text-align:center}
+.tower-empty i{color:#31815D;font-size:22px}
+.tower-empty strong{font-size:11px;color:#25454B}
+.tower-empty span{font-size:9px}
+.feedback-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
+.feedback-heading-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
+.feedback-stats{display:grid;grid-template-columns:repeat(3,minmax(88px,1fr));gap:7px;flex:none}
+.feedback-stat{display:flex;flex-direction:column;gap:2px;min-width:0;padding:8px 10px;border:1px solid #fff;border-radius:11px;background:#F7F3EC;box-shadow:2px 2px 6px #ded8ce,-2px -2px 6px #fffdf8}
+.feedback-stat strong{font-size:15px;line-height:1}
+.feedback-stat span{color:#65777A;font-size:7px;white-space:nowrap}
+.feedback-insight{display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid #F1D4C5;border-radius:13px;background:linear-gradient(105deg,#FFF4EA,#FFF9F2)}
+.feedback-insight>i{display:grid;place-items:center;width:28px;height:28px;flex:none;border-radius:9px;background:#FFE1CF;color:#B85832;font-size:15px}
+.feedback-insight-copy{display:flex;flex:1;flex-direction:column;gap:2px;min-width:0}
+.feedback-insight-copy strong{font-size:9px}
+.feedback-insight-copy span{color:#765F53;font-size:8px;line-height:1.35}
+.feedback-insight small{color:#8A6A5C;font-size:7px;white-space:nowrap}
+.feedback-filters{display:flex;gap:6px;flex-wrap:wrap}
+.feedback-filter{min-height:29px;padding:0 10px;font-size:9px!important}
+.feedback-table-scroll{min-width:0;overflow:auto;border:1px solid #E9E3D9;border-radius:14px;background:#fff}
+.feedback-grid-head,.feedback-row{display:grid;grid-template-columns:minmax(120px,1fr) minmax(130px,1.05fr) 78px minmax(180px,1.5fr) minmax(170px,1.4fr);gap:10px;align-items:center;min-width:800px}
+.feedback-grid-head{padding:10px 12px;background:#F4F0E9;color:#637477;font-size:8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.feedback-row{padding:10px 12px;border-top:1px solid #EEE9E1;font-size:9px!important}
+.feedback-person{display:flex;flex-direction:column;gap:3px;min-width:0}
+.feedback-person>span:first-child{font-weight:800;font-size:10px}
+.feedback-new{align-self:flex-start;padding:2px 5px;border-radius:99px;background:#FFE5D8;color:#A34B2C;font-size:6px;font-weight:800;letter-spacing:.06em}
+.feedback-signal-button{max-width:100%;padding:7px 8px!important;border-radius:9px!important}
+.feedback-signal-button>span:first-child{font-size:8px!important}
+.feedback-signal-button>span:last-child{font-size:7px!important}
+.duty-view{gap:12px}
+.duty-scope{display:flex;align-items:flex-start;gap:9px;max-width:960px;padding:10px 12px;border:1px solid #CADDE0;border-radius:13px;background:#EAF2F2}
+.duty-scope>i{flex:none;margin-top:1px;color:#075B6D;font-size:15px}
+.duty-scope-copy{display:flex;flex-direction:column;gap:3px;color:#506367;font-size:8px;line-height:1.4}
+.duty-scope-copy strong{color:#10262D;font-size:9px}
+.duty-heading{display:flex;flex-direction:column;gap:5px;max-width:960px}
+.duty-heading-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:#637477;font-size:8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.duty-heading p{margin:0;color:#65777A;font-size:9px}
+.duty-alert{display:flex;align-items:center;gap:11px;max-width:960px;padding:11px 13px;border:1px solid #F3E0A7;border-radius:14px;background:#FFF7D9}
+.duty-alert>i{flex:none;color:#92701B;font-size:18px}
+.duty-alert-copy{display:flex;flex:1;flex-direction:column;gap:3px;min-width:0}
+.duty-alert-copy strong{font-size:10px}
+.duty-alert-copy span{color:#6F5D2C;font-size:8px;line-height:1.35}
+.duty-alert button{min-height:34px!important;padding:0 12px!important;font-size:8px!important;white-space:nowrap}
+.duty-progress{color:#285C48;font-size:9px;font-weight:800;white-space:nowrap}
+.duty-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:960px}
+.duty-summary-card{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid #fff;border-radius:11px;background:#F7F3EC;box-shadow:2px 2px 6px #ded8ce,-2px -2px 6px #fffdf8}
+.duty-summary-card i{color:#075B6D;font-size:14px}
+.duty-summary-card strong{font-size:14px}
+.duty-summary-card span{color:#65777A;font-size:8px}
+.duty-group{display:flex;flex-direction:column;gap:5px;max-width:960px}
+.duty-group-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px}
+.duty-group-heading strong{font-size:10px}
+.duty-group-heading span{color:#718184;font-size:8px}
+.duty-table-scroll{overflow:auto;border:1px solid #E9E3D9;border-radius:13px;background:#fff}
+.duty-table-head,.duty-row{display:grid;grid-template-columns:minmax(130px,1.2fr) minmax(130px,1fr) minmax(180px,1.4fr) minmax(138px,.9fr);gap:10px;align-items:center;min-width:690px}
+.duty-table-head{padding:9px 12px;background:#F4F0E9;color:#637477;font-size:8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.duty-row{padding:9px 12px;border-top:1px solid #EEE9E1;font-size:9px}
+.duty-empty{display:flex;align-items:center;gap:10px;max-width:960px;padding:12px;border:1px solid #D5E9DD;border-radius:13px;background:#F1F8F2}
+.duty-empty>i{color:#31815D;font-size:18px}
+.duty-empty div{display:flex;flex-direction:column;gap:2px}
+.duty-empty strong{font-size:10px}
+.duty-empty span{color:#637477;font-size:8px}
+@media(max-width:1000px){.agency-console{grid-template-columns:205px minmax(0,1fr)}.console-view{padding:18px}.tower-body{grid-template-columns:minmax(0,1fr) minmax(320px,.9fr)}.tower-heading h1,.feedback-heading h1,.duty-heading h1{font-size:22px}}
+@media(max-width:740px){.agency-console{height:auto;min-height:100vh;grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);border-radius:0;overflow:visible}.console-sidebar{gap:10px;padding:12px}.console-sidebar-brand{padding:0 4px}.console-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.console-nav-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.console-nav-heading{grid-column:1/-1;padding:3px 5px}.console-nav-item{height:34px;padding:0 7px!important;font-size:9px!important}.console-agent{margin-top:0;padding:0 4px;font-size:8px}.console-main{min-height:600px}.console-view{overflow:visible;padding:14px}.tower-header{flex-direction:column}.tower-kpis{gap:6px}.tower-kpi{gap:6px;padding:8px}.tower-kpi-icon{width:26px;height:26px}.tower-kpi-copy strong{font-size:14px}.tower-kpi-copy span{font-size:7px}.tower-body{grid-template-columns:1fr;min-height:0}.tower-list{overflow:visible}.console-detail-panel{max-height:none}.feedback-heading{flex-direction:column}.feedback-stats{width:100%}.feedback-insight{align-items:flex-start}.feedback-insight small{white-space:normal;text-align:right}.duty-view{gap:10px}.duty-alert{flex-wrap:wrap}.duty-alert-copy{min-width:calc(100% - 40px)}.duty-alert button{margin-left:28px}.duty-summary{gap:5px}.duty-summary-card{gap:5px;padding:7px}.duty-summary-card strong{font-size:12px}.duty-summary-card span{font-size:7px}}
+@media(max-width:420px){.tower-kpis{grid-template-columns:1fr}.tower-kpi{min-height:35px}.tower-list-head{align-items:flex-start;flex-direction:column}.tower-filter{padding:0 6px}.duty-summary{grid-template-columns:1fr}.feedback-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.console-nav-item,.console-case-row{transition:none}}
+</style>
+</helmet>
+<div class="agency-console">
+  <aside class="console-sidebar">
+    <div class="console-sidebar-brand">
+      <strong>Harbour &amp; Co.</strong>
+      <span>Agent console · Séjour</span>
+    </div>
+    <nav class="console-nav" aria-label="Agency and client views">
+      <div class="console-nav-group">
+      <span class="console-nav-heading">Your agency</span>
+      <sc-for list="{{ navMain }}" as="n" hint-placeholder-count="2">
+        <button class="console-nav-item {{ n.activeClass }}" onClick="{{ n.onClick }}" aria-current="{{ n.ariaCurrent }}" style="height:44px;padding:0 12px;border:none;border-radius:12px;background:{{ n.bg }};color:#fff;display:flex;gap:10px;align-items:center;cursor:pointer;font-weight:{{ n.weight }};font-size:15px;text-align:left" style-hover="background:rgba(255,255,255,.1)"><i class="{{ n.icon }}" style="font-size:20px;color:{{ n.iconColor }}"></i><span style="flex:1">{{ n.label }}</span><span style="font-size:12px;font-weight:700;color:#9FC6CE">{{ n.count }}</span></button>
+      </sc-for>
+      </div>
+      <div class="console-nav-group">
+      <span class="console-nav-heading">Corporate client portals</span>
+      <sc-for list="{{ navClients }}" as="n" hint-placeholder-count="2">
+        <button class="console-nav-item {{ n.activeClass }}" onClick="{{ n.onClick }}" aria-current="{{ n.ariaCurrent }}" style="height:44px;padding:0 12px;border:none;border-radius:12px;background:{{ n.bg }};color:#fff;display:flex;gap:10px;align-items:center;cursor:pointer;font-weight:{{ n.weight }};font-size:15px;text-align:left" style-hover="background:rgba(255,255,255,.1)"><i class="{{ n.icon }}" style="font-size:20px;color:{{ n.iconColor }}"></i><span style="flex:1">{{ n.label }}</span></button>
+      </sc-for>
+      </div>
+    </nav>
+    <div class="console-agent">Signed in as Dana Whitfield, travel agent at Harbour &amp; Co. Private essentials stay hidden unless a traveler shares them.</div>
+  </aside>
+
+  <main class="console-main">
+  <sc-if value="{{ isTower }}" hint-placeholder-val="{{ true }}">
+    <div class="console-view tower-view">
+      <header class="tower-header">
+        <div class="tower-heading">
+          <div class="tower-heading-line">
+            <h1>Control tower</h1>
+            <sc-if value="{{ phases }}" hint-placeholder-val="{{ true }}"><span class="console-phase">Roadmap · Phase 2</span></sc-if>
+          </div>
+          <p>Harbour &amp; Co. travelers on a trip now · Fri 3 Oct, 10:14 Toronto</p>
+        </div>
+      </header>
+      <div class="tower-kpis" aria-label="Agency activity summary">
+        <div class="tower-kpi"><span class="tower-kpi-icon" style="background:#FFF0D2;color:#8A6718"><i class="ph-fill ph-warning"></i></span><div class="tower-kpi-copy"><strong>{{ kAtRisk }}</strong><span>At risk now</span></div></div>
+        <div class="tower-kpi"><span class="tower-kpi-icon"><i class="ph-fill ph-hand-pointing"></i></span><div class="tower-kpi-copy"><strong>{{ kAwaiting }}</strong><span>Need action</span></div></div>
+        <div class="tower-kpi"><span class="tower-kpi-icon" style="background:#E2F2E8;color:#1E6B43"><i class="ph-fill ph-check-circle"></i></span><div class="tower-kpi-copy"><strong>{{ kResolved }}</strong><span>Resolved today</span></div></div>
+      </div>
+      <div class="tower-body">
+        <div class="tower-list">
+          <div class="tower-list-head">
+            <div class="tower-list-title"><strong>Traveler signals</strong><span>{{ towerVisibleCount }} records · newest first</span></div>
+            <div class="tower-filters" role="group" aria-label="Filter traveler signals">
+              <button class="tower-filter" onClick="{{ showActionItems }}" aria-pressed="{{ actionFilterOn }}">Needs action · {{ kAwaiting }}</button>
+              <button class="tower-filter" onClick="{{ showAllItems }}" aria-pressed="{{ allFilterOn }}">All · {{ totalRows }}</button>
+            </div>
+          </div>
+          <sc-if value="{{ hasTowerRows }}" hint-placeholder-val="{{ true }}">
+          <sc-for list="{{ towerRows }}" as="r" hint-placeholder-count="6">
+            <button class="console-case-row" onClick="{{ r.onClick }}" aria-pressed="{{ r.selected }}" style="display:grid;grid-template-columns:36px minmax(0,1.2fr) minmax(0,1.3fr) 142px;gap:10px;align-items:center;text-align:left;padding:10px;border-radius:13px;border:1.5px solid {{ r.border }};background:{{ r.bg }};cursor:pointer" style-hover="border-color:#004E64">
+              <span style="width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:{{ r.sevBg }};color:{{ r.sevColor }}"><i class="{{ r.sig }}" style="font-size:17px"></i></span>
+              <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:700;font-size:15px">{{ r.name }}</span><span style="font-size:13px;color:#55686E">{{ r.route }}</span></span>
+              <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:700;font-size:14px">{{ r.signal }}</span><span style="font-size:13px;color:#55686E">{{ r.sevLine }}</span></span>
+              <span style="justify-self:start;display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:{{ r.stBg }};color:{{ r.stColor }}"><i class="{{ r.stIcon }}" style="font-size:14px"></i>{{ r.stLabel }}</span>
+            </button>
+          </sc-for>
+          </sc-if>
+          <sc-if value="{{ noTowerRows }}" hint-placeholder-val="{{ false }}"><div class="tower-empty"><i class="ph-fill ph-check-circle"></i><strong>Nothing needs action right now</strong><span>Switch to All to see every traveler signal.</span></div></sc-if>
+        </div>
+
+        <section class="console-detail-panel" style="background:#fff;border:1.5px solid #E4DFD6;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px;overflow-y:auto">
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#55686E">{{ sel.client }}</span>
+            <h2 style="margin:0;font-size:24px;font-weight:800">{{ sel.name }}</h2>
+            <span style="font-size:14px;color:#55686E">{{ sel.route }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:16px;background:{{ sel.sevBg }}">
+            <span style="display:flex;gap:8px;align-items:center;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:{{ sel.sevColor }}"><i class="{{ sel.sevIcon }}" style="font-size:16px"></i>{{ sel.sevLabel }}</span>
+            <span style="font-weight:700;font-size:16px">{{ sel.signal }}</span>
+            <span style="font-size:13px;color:#3E4F54">{{ sel.evidence }}</span>
+          </div>
+
+          <sc-if value="{{ sel.editing }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#FF6B35">You’ve taken over</span>
+                <span style="font-size:14px;color:#3E4F54;line-height:1.45">Séjour’s suggestion is on hold. Pick your own replacement, then send it to {{ sel.first }} to approve.</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <sc-for list="{{ sel.altList }}" as="a" hint-placeholder-count="3">
+                  <button onClick="{{ a.onClick }}" style="display:flex;gap:10px;align-items:center;text-align:left;padding:10px 12px;border-radius:12px;border:1.5px solid {{ a.border }};background:{{ a.bg }};cursor:pointer;font-size:14px"><i class="{{ a.icon }}" style="font-size:18px;color:#004E64"></i>{{ a.label }}</button>
+                </sc-for>
+              </div>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:#55686E">Message to {{ sel.first }}
+                <textarea value="{{ sel.msg }}" onChange="{{ onMsg }}" rows="3" style="border:1.5px solid #D9D3C8;border-radius:12px;padding:10px 12px;font-size:14px;font-weight:500;color:#10262D;line-height:1.45;resize:none"></textarea>
+              </label>
+              <div style="display:flex;gap:8px">
+                <button onClick="{{ sendOwn }}" style="flex:1;height:48px;border-radius:999px;border:none;background:#004E64;color:#fff;font-weight:700;font-size:15px;cursor:pointer" style-hover="background:#00647F">Send to {{ sel.first }} to approve</button>
+                <button onClick="{{ reopenSel }}" style="height:48px;padding:0 18px;border-radius:999px;border:none;background:transparent;color:#004E64;font-weight:700;cursor:pointer" style-hover="background:#E3EEF0">Cancel</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ sel.notEditing }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#55686E">{{ sel.changeHeading }}</span>
+              <sc-for list="{{ sel.changes }}" as="c" hint-placeholder-count="2">
+                <div style="display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4"><i class="{{ c.icon }}" style="font-size:18px;color:{{ c.color }};flex:none;margin-top:1px"></i><span><b>{{ c.op }}</b> · {{ c.text }}</span></div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ sel.hasOffer }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;border:1.5px dashed #D9D3C8">
+              <i class="ph-fill ph-car" style="font-size:22px;color:#FF6B35"></i>
+              <span style="flex:1;font-size:14px;line-height:1.4">{{ sel.offer }}</span>
+            </div>
+          </sc-if>
+          <div style="font-size:13px;color:#55686E;display:flex;gap:8px;align-items:center"><i class="ph ph-eye-slash" style="font-size:16px"></i>{{ sel.privacy }}</div>
+
+          <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+            <sc-if value="{{ sel.open }}" hint-placeholder-val="{{ true }}">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <button onClick="{{ approveSel }}" style="height:48px;border-radius:999px;border:none;background:#004E64;color:#fff;font-weight:700;font-size:15px;cursor:pointer" style-hover="background:#00647F" style-active="background:#00303D">Approve for {{ sel.first }}</button>
+                  <span style="font-size:12px;color:#55686E;line-height:1.4">Applies Séjour’s suggestion as it is. Use when {{ sel.first }} can’t respond in time.</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <button onClick="{{ takeOver }}" style="height:48px;border-radius:999px;border:1.5px solid #004E64;background:transparent;color:#004E64;font-weight:700;font-size:15px;cursor:pointer" style-hover="background:#E3EEF0">Take over</button>
+                  <span style="font-size:12px;color:#55686E;line-height:1.4">Puts the suggestion on hold so you can rework it here yourself.</span>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ sel.closed }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:16px;background:{{ sel.stBg }};color:{{ sel.stColor }}">
+                <div style="display:flex;gap:10px;align-items:center;font-weight:700"><i class="{{ sel.stIcon }}" style="font-size:20px"></i><span style="flex:1">{{ sel.closedText }}</span><sc-if value="{{ sel.canUndo }}" hint-placeholder-val="{{ false }}"><button onClick="{{ reopenSel }}" style="border:none;background:none;font-weight:700;cursor:pointer;color:#004E64;padding:6px 0">Undo</button></sc-if></div>
+                <span style="font-size:13px;color:#3E4F54;line-height:1.45">{{ sel.closedNote }}</span>
+              </div>
+            </sc-if>
+          </div>
+        </section>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isFeedback }}" hint-placeholder-val="{{ false }}">
+    <div class="console-view feedback-view">
+      <div class="feedback-heading">
+        <div class="feedback-heading-copy">
+          <div class="tower-heading-line">
+            <h1>Traveler feedback</h1>
+            <sc-if value="{{ phases }}" hint-placeholder-val="{{ true }}"><span class="console-phase" style="background:#FFE3D6;color:#7A2A0A">Proposed · not in brief</span></sc-if>
+          </div>
+          <p>Evening ratings from the traveler app. Signals stay suggestions until you choose to use them.</p>
+        </div>
+        <div class="feedback-stats" aria-label="Feedback summary">
+          <div class="feedback-stat"><strong>{{ fbAvg }}<span style="color:#F08A52"> ★</span></strong><span>Average rating</span></div>
+          <div class="feedback-stat"><strong>{{ fbCount }}</strong><span>Ratings this week</span></div>
+          <div class="feedback-stat"><strong>{{ fbLow }}</strong><span>Need a look</span></div>
+        </div>
+      </div>
+      <div class="feedback-insight">
+        <i class="ph ph-sparkle"></i>
+        <div class="feedback-insight-copy"><strong>Pattern to review · {{ fbWalkingLowLabel }}</strong><span>{{ fbWalkingCopy }} Any planning rule still needs your approval.</span></div>
+        <small>{{ fbUsedCount }} signals in use</small>
+      </div>
+      <div class="feedback-filters" role="group" aria-label="Filter traveler feedback">
+        <sc-for list="{{ fbFilters }}" as="f" hint-placeholder-count="3">
+          <button class="feedback-filter" onClick="{{ f.onClick }}" aria-pressed="{{ f.selected }}" style="height:38px;padding:0 14px;border-radius:999px;border:1.5px solid {{ f.border }};background:{{ f.bg }};color:{{ f.color }};font-weight:700;font-size:14px;cursor:pointer">{{ f.label }} · {{ f.count }}</button>
+        </sc-for>
+      </div>
+      <div class="feedback-table-scroll" role="region" aria-label="Traveler feedback and planning signals" tabindex="0">
+        <div class="feedback-grid-head"><span>Traveler</span><span>Plan</span><span>Rating</span><span>Traveler comment</span><span>Planning signal</span></div>
+        <sc-for list="{{ fbRows }}" as="f" hint-placeholder-count="6">
+          <div class="feedback-row" style="background:{{ f.rowBg }}">
+            <span class="feedback-person"><span>{{ f.name }}</span><span style="font-size:8px;color:#55686E">{{ f.when }}</span><sc-if value="{{ f.live }}" hint-placeholder-val="{{ false }}"><small class="feedback-new">NEW · JUST NOW</small></sc-if></span>
+            <span>{{ f.event }}</span>
+            <span style="font-size:16px;letter-spacing:1px"><span style="color:#FF6B35">{{ f.full }}</span><span style="color:#D9D3C8">{{ f.empty }}</span></span>
+            <span style="color:{{ f.commentColor }};line-height:1.4">{{ f.comment }}</span>
+            <sc-if value="{{ f.hasSignal }}" hint-placeholder-val="{{ false }}">
+              <button class="feedback-signal-button" onClick="{{ f.onApply }}" aria-pressed="{{ f.signalUsed }}" style="justify-self:start;display:flex;flex-direction:column;gap:2px;text-align:left;padding:8px 10px;border-radius:12px;border:1.5px solid {{ f.sigBorder }};background:{{ f.sigBg }};cursor:pointer">
+                <span style="font-size:13px;font-weight:700;line-height:1.3">{{ f.signal }}</span>
+                <span style="font-size:12px;font-weight:700;color:{{ f.sigColor }};display:flex;gap:4px;align-items:center"><i class="{{ f.sigIcon }}"></i>{{ f.sigState }}</span>
+              </button>
+            </sc-if>
+            <sc-if value="{{ f.noSignal }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:#8C8478">None</span></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isDuty }}" hint-placeholder-val="{{ false }}">
+    <div class="console-view duty-view">
+      <div class="duty-scope">
+        <i class="ph-fill ph-eye"></i>
+        <div class="duty-scope-copy"><strong>Client portal preview · {{ client.name }}</strong><span>{{ client.manager }} sees only {{ client.name }}’s employees. Leisure travelers and other companies stay outside this view.</span></div>
+      </div>
+      <header class="duty-heading">
+        <div class="duty-heading-top"><span>Duty of care · {{ client.name }}</span><sc-if value="{{ phases }}" hint-placeholder-val="{{ true }}"><span class="console-phase">Phase 2 · if capacity</span></sc-if></div>
+        <h1>{{ client.headline }}</h1>
+        <p>Review exposure for this client’s travelers only.</p>
+      </header>
+      <sc-if value="{{ client.hasAlert }}" hint-placeholder-val="{{ true }}">
+      <div class="duty-alert">
+        <i class="ph-fill ph-warning"></i>
+        <div class="duty-alert-copy"><strong>Snow from 06:00 · 4–7 cm · Watch</strong><span>80% confidence · expires 18:00 · outdoor plans may be affected this afternoon.</span></div>
+        <sc-if value="{{ dutyIdle }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ proposeAll }}" style="height:48px;padding:0 20px;border-radius:999px;border:none;background:#004E64;color:#fff;font-weight:700;font-size:15px;cursor:pointer" style-hover="background:#00647F">Suggest to 4 travelers</button>
+        </sc-if>
+        <sc-if value="{{ dutySent }}" hint-placeholder-val="{{ false }}">
+          <span class="duty-progress">{{ dutyProgress }}</span>
+        </sc-if>
+      </div>
+      </sc-if>
+      <div class="duty-summary" aria-label="Client traveler summary">
+        <div class="duty-summary-card"><i class="ph-fill ph-warning"></i><strong>{{ dutyAffectedCount }}</strong><span>Affected</span></div>
+        <div class="duty-summary-card"><i class="ph ph-hourglass-medium"></i><strong>{{ dutyActionCount }}</strong><span>Need review</span></div>
+        <div class="duty-summary-card"><i class="ph-fill ph-check-circle"></i><strong>{{ dutyUnaffectedCount }}</strong><span>Not affected</span></div>
+      </div>
+
+      <sc-if value="{{ client.hasAlert }}" hint-placeholder-val="{{ true }}"><section class="duty-group"><div class="duty-group-heading"><strong>Affected travelers</strong><span>{{ dutyAffectedCount }} people · each plan stays individual</span></div><div class="duty-table-scroll"><div class="duty-table-head"><span>Traveler</span><span>Where</span><span>Exposure</span><span>Status</span></div><sc-for list="{{ dutyAffected }}" as="d" hint-placeholder-count="5"><div class="duty-row"><span style="font-weight:800">{{ d.name }}</span><span style="color:#55686E">{{ d.where }}</span><span>{{ d.exposure }}</span><span style="justify-self:start;display:inline-flex;gap:5px;align-items:center;padding:4px 7px;border-radius:999px;font-size:7px;font-weight:800;background:{{ d.bg }};color:{{ d.color }}"><i class="{{ d.icon }}" style="font-size:11px"></i>{{ d.label }}</span></div></sc-for></div></section></sc-if>
+
+      <sc-if value="{{ noAffectedDuty }}" hint-placeholder-val="{{ false }}"><div class="duty-empty"><i class="ph-fill ph-check-circle"></i><div><strong>No travelers need attention right now</strong><span>All {{ dutyUnaffectedCount }} travelers in this portal are currently outside the active alert.</span></div></div></sc-if>
+
+      <section class="duty-group"><div class="duty-group-heading"><strong>Not currently affected</strong><span>{{ dutyUnaffectedCount }} people</span></div><div class="duty-table-scroll"><div class="duty-table-head"><span>Traveler</span><span>Where</span><span>Exposure</span><span>Status</span></div><sc-for list="{{ dutyUnaffected }}" as="d" hint-placeholder-count="3"><div class="duty-row"><span style="font-weight:800">{{ d.name }}</span><span style="color:#55686E">{{ d.where }}</span><span>{{ d.exposure }}</span><span style="justify-self:start;display:inline-flex;gap:5px;align-items:center;padding:4px 7px;border-radius:999px;font-size:7px;font-weight:800;background:{{ d.bg }};color:{{ d.color }}"><i class="{{ d.icon }}" style="font-size:11px"></i>{{ d.label }}</span></div></sc-for></div></section>
+
+      <div style="font-size:9px;color:#55686E;max-width:640px;line-height:1.5">Any suggested change is sent to the individual traveler for their own review. Nothing is pushed onto a plan.</div>
+    </div>
+  </sc-if>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:820},&quot;startTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;tower&quot;,&quot;feedback&quot;,&quot;duty&quot;],&quot;default&quot;:&quot;tower&quot;,&quot;tsType&quot;:&quot;'tower' | 'feedback' | 'duty'&quot;},&quot;showPhases&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { tab: this.props.startTab || 'tower', sel: 0, res: {}, alt: {}, msg: {}, dutySent: false, dutyDone: 0, client: 'northwind', fbFilter: 'all', towerFilter: 'action', applied: { 2: true }, live: [] };
+  componentDidMount() {
+    this.onFb = e => { const d = e.detail, stamp = Date.now(); this.setState(st => ({ live: [...d.items.map((it, k) => ({ id: `live-${stamp}-${k}`, name: d.name, when: 'Just now', event: it.event, stars: it.stars, comment: k === 0 ? d.text : '', signal: it.stars <= 2 ? 'Review: low rating today' : '', live: true })), ...st.live] })); };
+    window.addEventListener('sejour-feedback', this.onFb);
+  }
+  componentWillUnmount() { clearInterval(this.iv); window.removeEventListener('sejour-feedback', this.onFb); }
+  renderVals() {
+    const s = this.state, T = '#004E64', phases = this.props.showPhases ?? true;
+    const SEV = { alert: { bg: '#FBE4E7', color: '#8F1B2B', icon: 'ph-fill ph-warning-octagon', label: 'Alert' }, watch: { bg: '#FFF4CC', color: '#6B5200', icon: 'ph-fill ph-warning', label: 'Watch' }, ok: { bg: '#E2F2E8', color: '#1E6B43', icon: 'ph-fill ph-check-circle', label: 'OK' } };
+    const ST = { proposed: { bg: '#E3EEF0', color: T, icon: 'ph ph-hourglass-medium', label: 'Awaiting traveler' }, agent: { bg: '#E2F2E8', color: '#1E6B43', icon: 'ph-fill ph-check-circle', label: 'Approved by Dana' }, takeover: { bg: '#FFE3D6', color: '#7A2A0A', icon: 'ph-fill ph-pencil-simple', label: 'Dana is reworking' }, sent: { bg: '#E3EEF0', color: T, icon: 'ph ph-paper-plane-tilt', label: 'Dana’s version sent' }, traveler: { bg: '#E2F2E8', color: '#1E6B43', icon: 'ph-fill ph-check-circle', label: 'Approved by traveler' }, forecast: { bg: '#EEEAE3', color: '#3E4F54', icon: 'ph ph-chart-line-up', label: 'Forecast adjusted' } };
+    const stay = t => ({ op: 'Stays', text: t, icon: 'ph-fill ph-push-pin', color: T });
+    const swap = t => ({ op: 'Swap', text: t, icon: 'ph ph-arrow-bend-down-right', color: '#FF6B35' });
+    const data = [
+      { name: 'Amara Okafor', route: 'LHR → YYZ · day 3 of 10', client: 'Leisure', sig: 'ph ph-snowflake', sev: 'watch', signal: 'Snow from 06:00, 4–7 cm', evidence: 'Two forecast sources · 80% confidence · expires 18:00', stays: ['Co-working 9:00–12:30 (anchor)', 'Dinner, Ossington 19:30'], from: 'Island ferry 14:00', alts: ['Art Gallery of Ontario · indoor · $30', 'Royal Ontario Museum · indoor · $26', 'Ripley’s Aquarium · indoor · $44', 'Keep the ferry, move it to Sunday'], st: 'proposed', privacy: '1 private essentials category hidden' },
+      { name: 'Tomás Reyes', route: 'MAD → JFK · arriving today', client: 'Leisure', sig: 'ph ph-airplane-tilt', sev: 'alert', signal: 'Flight delayed 3h 40m', evidence: 'Flight-status feed · 95% confidence · updated 4 min ago', stays: ['Hotel, late check-in 23:10'], from: 'Dinner reservation 20:00', alts: ['Tomorrow 19:30, same restaurant', 'Keep tonight, move to 21:45', 'Cancel, hotel room service'], offer: 'Late-night transfer JFK → Midtown, $68 · opens Harbour & Co. checkout', st: 'proposed', privacy: 'No private categories' },
+      { name: 'Priya Nair', route: 'SIN → NRT · day 2 of 6', client: 'Leisure', sig: 'ph ph-wind', sev: 'alert', signal: 'Typhoon advisory, Tokyo, Sat–Sun', evidence: 'Official advisory · 70% confidence on track · expires Sun 12:00', stays: ['Return flight Wed 11:05'], from: 'Saturday Hakone day trip', alts: ['Hakone on Monday', 'Hakone on Sunday afternoon', 'Indoor day at teamLab Planets'], st: 'proposed', privacy: 'No private categories' },
+      { name: 'Lukas Brandt', route: 'FRA → YYZ · day 1 of 4', client: 'Northwind Consulting', sig: 'ph ph-snowflake', sev: 'watch', signal: 'Snow from 06:00, 4–7 cm', evidence: 'Two forecast sources · 80% confidence · expires 18:00', stays: ['Client meeting 10:00 (anchor)'], from: 'Walk to lunch, 12:30', alts: ['6 min taxi, $14', 'PATH underground walk, 11 min', 'Lunch delivered to the office'], st: 'proposed', privacy: 'No private categories' },
+      { name: 'Sofia Marino', route: 'FCO → BCN · day 5 of 7', client: 'Leisure', sig: 'ph ph-ticket', sev: 'watch', signal: 'Stadium concert Saturday, near hotel', evidence: 'Event signal · 72% confidence · prices nearby typically +22%', stays: ['Budget cap €1,800'], from: 'Budget forecast', alts: ['Forecast now €1,760 by departure'], st: 'forecast', privacy: 'No private categories' },
+      { name: 'Chen Wei', route: 'YVR → YYZ · day 3 of 5', client: 'Northwind Consulting', sig: 'ph ph-snowflake', sev: 'ok', signal: 'Snow from 06:00, 4–7 cm', evidence: 'Two forecast sources · 80% confidence · expires 18:00', stays: [], from: 'CN Tower EdgeWalk', alts: ['Ripley’s Aquarium'], st: 'traveler', privacy: 'No private categories' }];
+    const cur = i => s.res[i] || data[i].st;
+    const rows = data.map((d, i) => {
+      const c = cur(i), st = ST[c], sv = SEV[c === 'proposed' || c === 'takeover' ? d.sev : (c === 'forecast' ? 'watch' : 'ok')], on = s.sel === i;
+      return { ...d, selected: on, sevBg: sv.bg, sevColor: sv.color, sevLine: sv.label + ' · ' + d.evidence.split(' · ')[1], stBg: st.bg, stColor: st.color, stIcon: st.icon, stLabel: st.label, bg: on ? '#fff' : 'transparent', border: on ? T : 'transparent', onClick: () => this.setState({ sel: i }) };
+    });
+    const towerRows = s.towerFilter === 'all' ? rows : rows.filter((_, k) => ['proposed', 'takeover'].includes(cur(k)));
+    const changeTowerFilter = filter => this.setState(st => {
+      let nextSel = st.sel;
+      if (filter === 'action' && !['proposed', 'takeover'].includes(st.res[st.sel] || data[st.sel].st)) nextSel = data.findIndex((item, k) => ['proposed', 'takeover'].includes(st.res[k] || item.st));
+      return { towerFilter: filter, sel: nextSel < 0 ? 0 : nextSel };
+    });
+    const i = s.sel, d = data[i], c = cur(i), r = rows[i], SV = SEV[d.sev], first = d.name.split(' ')[0];
+    const altIdx = s.alt[i] ?? 0;
+    const changes = d.st === 'forecast' ? [stay(d.stays[0]), { op: 'Update', text: d.alts[0], icon: 'ph ph-chart-line-up', color: '#FF6B35' }] : [...d.stays.map(stay), swap(`${d.from} → ${d.alts[c === 'sent' ? altIdx : 0]}`)];
+    const altList = d.alts.map((label, k) => { const on = k === altIdx; return { label, icon: on ? 'ph-fill ph-radio-button' : 'ph ph-circle', bg: on ? '#E3EEF0' : '#fff', border: on ? T : '#E4DFD6', onClick: () => this.setState(st => ({ alt: { ...st.alt, [i]: k } })) }; });
+    const defMsg = `Hi ${first}, I’ve reworked your plan for today. Tap to review. Nothing changes until you approve. Dana, Harbour & Co.`;
+    const closedText = { agent: `Approved for ${first} by Dana at 10:14`, sent: `Your version is waiting for ${first}`, traveler: `${first} approved it at 07:02`, forecast: 'Forecast updated, no plan change needed' }[c];
+    const closedNote = { agent: `${first} gets a notification. She can undo until the end of her day, and that window starts when she first opens it, not when you clicked.`, sent: `${first} approves or declines in the app. Séjour’s original suggestion stays on hold.`, traveler: 'The traveler made this call themselves.', forecast: 'The budget ring absorbed the event-price bump. Nothing to approve.' }[c];
+    const sel = { ...r, first, sevBg: SV.bg, sevColor: SV.color, sevIcon: SV.icon, sevLabel: SV.label, hasOffer: !!d.offer && c === 'proposed', changes, changeHeading: c === 'sent' ? 'Dana’s version' : 'Séjour’s suggestion', altList, msg: s.msg[i] ?? defMsg,
+      open: c === 'proposed', editing: c === 'takeover', notEditing: c !== 'takeover', closed: !['proposed', 'takeover'].includes(c), closedText, closedNote, canUndo: c === 'agent' || c === 'sent' };
+    const open = data.filter((x, k) => ['proposed', 'takeover'].includes(cur(k))).length;
+    // Feedback
+    const fbBase = [
+      { name: 'Maya Lindqvist', when: 'Yesterday · Northwind', event: 'Site visit on foot', stars: 1, comment: 'Should have been told to take a taxi, got soaked.', signal: 'Flag outdoor work visits on Watch days' },
+      { name: 'Sofia Marino', when: 'Yesterday', event: 'Tapas walk, El Born', stars: 2, comment: 'Too long on foot after a long day, 40 min.', signal: 'Cap evening walks at 20 min' },
+      { name: 'Chen Wei', when: 'Yesterday · Northwind', event: 'Ripley’s Aquarium (Plan B)', stars: 5, comment: 'Much better than the tower in that wind.', signal: 'Accepts indoor swaps in bad weather' },
+      { name: 'Lukas Brandt', when: 'Yesterday · Northwind', event: 'Taxi to lunch (Plan B)', stars: 3, comment: 'Fine, but the PATH would have been quicker.', signal: 'Prefer underground routes in Toronto' },
+      { name: 'Priya Nair', when: '2 days ago', event: 'Tsukiji outer market', stars: 5, comment: '', signal: '' },
+      { name: 'Tomás Reyes', when: '2 days ago', event: 'Prado, morning slot', stars: 4, comment: '', signal: '' }];
+    const all = [...s.live, ...fbBase];
+    const filtered = all.filter(f => s.fbFilter === 'low' ? f.stars <= 2 : s.fbFilter === 'comments' ? !!f.comment : true);
+    const fbRows = filtered.map(f => { const idx = all.indexOf(f) - s.live.length, key = f.id || idx, ap = !!s.applied[key];
+      return { ...f, signalUsed: ap, full: '★'.repeat(f.stars), empty: '★'.repeat(5 - f.stars), comment: f.comment || 'No comment', commentColor: f.comment ? '#10262D' : '#8C8478', rowBg: f.live ? '#FFF6F1' : 'transparent',
+        hasSignal: !!f.signal, noSignal: !f.signal, sigBg: ap ? '#E2F2E8' : '#fff', sigBorder: ap ? '#9CCBB2' : '#D9D3C8', sigColor: ap ? '#1E6B43' : T, sigIcon: ap ? 'ph-fill ph-check-circle' : 'ph ph-plus-circle', sigState: ap ? 'Used in planning' : 'Use in planning',
+        onApply: () => this.setState(st => ({ applied: { ...st.applied, [key]: !ap } })) }; });
+    const avg = all.reduce((a, f) => a + f.stars, 0) / all.length;
+    const fbCounts = { all: all.length, low: all.filter(f => f.stars <= 2).length, comments: all.filter(f => !!f.comment).length };
+    const fbFilters = [['all', 'All'], ['low', '1–2 stars'], ['comments', 'With comments']].map(([id, label]) => { const on = s.fbFilter === id; return { label, count: fbCounts[id], selected: on, bg: on ? T : '#fff', color: on ? '#fff' : T, border: on ? T : '#D9D3C8', onClick: () => this.setState({ fbFilter: id }) }; });
+    const fbWalkingLow = all.filter(f => f.stars <= 2 && /walk|foot|soaked/i.test((f.comment || '') + ' ' + f.event)).length;
+    const fbWalkingLowLabel = fbWalkingLow === 1 ? '1 low rating mentions walking comfort' : `${fbWalkingLow} low ratings mention walking comfort`;
+    const fbWalkingCopy = fbWalkingLow > 0 ? 'Comments point to weather exposure and long walks.' : 'No low-rating pattern is showing yet. Review new comments.';
+    const fbUsedCount = Object.values(s.applied).filter(Boolean).length;
+    // Duty
+    const nwPeople = [['Lukas Brandt', 'Toronto, Financial District', 'Walk to lunch at 12:30'], ['Chen Wei', 'Toronto, Harbourfront', 'CN Tower EdgeWalk at 15:00'], ['Maya Lindqvist', 'Toronto, Yorkville', 'Site visit on foot at 14:00'], ['Omar Haddad', 'Toronto, Liberty Village', 'Outdoor team event at 16:00'], ['Grace Kim', 'Toronto, King West', 'Walk between offices at 13:00'], ['Ravi Shah', 'Chicago', 'Not exposed'], ['Elena Petrova', 'London', 'Not exposed']];
+    const clPeople = [['Hannah Cole', 'Paris, 8e', 'Not exposed'], ['Marcus Obi', 'Frankfurt', 'Not exposed'], ['Isla Fraser', 'Edinburgh', 'Not exposed']];
+    const nw = s.client === 'northwind';
+    const queue = [0, 2, 3, 4];
+    const duty = (nw ? nwPeople : clPeople).map((p, k) => {
+      let st;
+      if (!nw || k >= 5) st = { bg: '#EEEAE3', color: '#3E4F54', icon: 'ph ph-minus-circle', label: 'Not affected' };
+      else if (k === 1) st = ST.traveler;
+      else if (!s.dutySent) st = { bg: '#FFF4CC', color: '#6B5200', icon: 'ph-fill ph-warning', label: 'Exposed' };
+      else st = queue.indexOf(k) < s.dutyDone ? ST.traveler : ST.proposed;
+      return { name: p[0], where: p[1], exposure: p[2], affected: p[2] !== 'Not exposed', ...st };
+    });
+    const dutyAffected = duty.filter(person => person.affected);
+    const dutyUnaffected = duty.filter(person => !person.affected);
+    const dutyActionCount = duty.filter(person => person.label === 'Exposed' || person.label === 'Awaiting traveler').length;
+    const client = nw ? { name: 'Northwind Consulting', manager: 'Jess Park, travel manager', headline: '5 of your 7 people are in the Toronto snow', hasAlert: true } : { name: 'Castell Legal', manager: 'Tom Reid, office manager', headline: 'None of your 3 travelers are affected right now', hasAlert: false };
+    const navItem = (on, label, icon, onClick, count) => ({ label, count: count ?? '', active: on, activeClass: on ? 'active' : '', ariaCurrent: on ? 'page' : 'false', icon: (on ? 'ph-fill ' : 'ph ') + icon, iconColor: on ? '#FF6B35' : '#9FC6CE', bg: on ? 'rgba(255,255,255,.12)' : 'transparent', weight: on ? 700 : 500, onClick });
+    const navMain = [navItem(s.tab === 'tower', 'Control tower', 'ph-broadcast', () => this.setState({ tab: 'tower' }), open), navItem(s.tab === 'feedback', 'Feedback', 'ph-star', () => this.setState({ tab: 'feedback' }), s.live.length ? s.live.length + ' new' : '')];
+    const navClients = [navItem(s.tab === 'duty' && nw, 'Northwind', 'ph-buildings', () => this.setState({ tab: 'duty', client: 'northwind' })), navItem(s.tab === 'duty' && !nw, 'Castell Legal', 'ph-buildings', () => this.setState({ tab: 'duty', client: 'castell' }))];
+    return {
+      phases, navMain, navClients, isTower: s.tab === 'tower', isFeedback: s.tab === 'feedback', isDuty: s.tab === 'duty', rows, sel,
+      towerRows, towerVisibleCount: towerRows.length, totalRows: rows.length, hasTowerRows: towerRows.length > 0, noTowerRows: towerRows.length === 0, actionFilterOn: s.towerFilter === 'action', allFilterOn: s.towerFilter === 'all', showActionItems: () => changeTowerFilter('action'), showAllItems: () => changeTowerFilter('all'),
+      kAtRisk: rows.filter(x => x.sev !== 'ok').length, kAwaiting: open, kResolved: 11 + Object.values(s.res).filter(x => x !== 'takeover').length,
+      approveSel: () => this.setState(st => ({ res: { ...st.res, [st.sel]: 'agent' } })), takeOver: () => this.setState(st => ({ res: { ...st.res, [st.sel]: 'takeover' } })),
+      sendOwn: () => this.setState(st => ({ res: { ...st.res, [st.sel]: 'sent' } })), onMsg: e => { const v = e.target.value; this.setState(st => ({ msg: { ...st.msg, [st.sel]: v } })); },
+      reopenSel: () => this.setState(st => { const res = { ...st.res }; delete res[st.sel]; return { res }; }),
+      fbRows, fbFilters, fbAvg: avg.toFixed(1), fbCount: 38 + s.live.length, fbLow: all.filter(f => f.stars <= 2).length, fbWalkingLow, fbWalkingLowLabel, fbWalkingCopy, fbUsedCount,
+      duty, dutyAffected, dutyUnaffected, dutyAffectedCount: dutyAffected.length, dutyUnaffectedCount: dutyUnaffected.length, dutyActionCount, noAffectedDuty: dutyAffected.length === 0, client, dutyIdle: !s.dutySent, dutySent: s.dutySent, dutyProgress: `${1 + s.dutyDone} of 5 approved`,
+      proposeAll: () => { this.setState({ dutySent: true, dutyDone: 0 }); clearInterval(this.iv); this.iv = setInterval(() => this.setState(st => { if (st.dutyDone >= 4) { clearInterval(this.iv); return null; } return { dutyDone: st.dutyDone + 1 }; }), 1400); }
+    };
+  }
+}
+</script>
+</body>
+</html>

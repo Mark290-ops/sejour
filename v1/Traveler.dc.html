@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+.traveler-device{width:390px;height:auto;aspect-ratio:390 / 844;display:flex;flex-direction:column;padding:10px;box-sizing:border-box;background:#10262D;border-radius:52px;box-shadow:0 30px 60px -24px rgba(16,38,45,.5);font-family:Satoshi,system-ui,sans-serif;color:#10262D}
+.traveler-screen{position:relative;width:100%;height:100%;min-height:0;overflow:hidden;background:#FAF7F2;border-radius:42px;display:flex;flex-direction:column}
+.traveler-device.device-iphone{aspect-ratio:78 / 163.4;border-radius:52px;padding:10px;background:linear-gradient(135deg,#dce0dd 0%,#6f7e81 2%,#f4f2ec 4%,#405256 6%,#102f36 10%,#102f36 88%,#cbd0ce 95%,#6d797c 100%)}
+.traveler-device.device-iphone>.traveler-screen{border-radius:42px}
+.traveler-device.device-samsung{aspect-ratio:79 / 162.3;border-radius:17px;padding:9px;background:linear-gradient(90deg,#bec4c2 0%,#5b676a 2%,#26393d 5%,#142a30 9%,#112b31 50%,#142a30 91%,#596669 95%,#c5cac8 98%,#566164 100%)}
+.traveler-device.device-samsung>.traveler-screen{border-radius:8px}
+.demo-evening-notice{position:absolute;z-index:12;top:55px;left:12px;right:12px;width:calc(100% - 24px);display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid #e9e3d8;border-radius:17px;background:#fff;color:#173b43;text-align:left;box-shadow:0 10px 26px #10262d2e;cursor:pointer;animation:notice-arrive .35s cubic-bezier(.2,.8,.2,1) both}
+.demo-evening-notice>i{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:11px;background:#075b6d;color:#fff;font-size:19px}
+.demo-evening-notice-copy{min-width:0;display:flex;flex:1;flex-direction:column;gap:3px}
+.demo-evening-notice-copy>span{display:flex;justify-content:space-between;gap:8px;color:#6b7b80;font-size:9px}
+.demo-evening-notice-copy>span b{color:#173b43;font-size:11px}
+.demo-evening-notice-copy>strong{font-size:11px;line-height:1.25}
+.demo-evening-notice-copy>small{color:#657477;font-size:9px;line-height:1.25}
+@keyframes notice-arrive{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes maple-float{0%,100%{transform:rotate(5deg) translateY(0)}50%{transform:rotate(2deg) translateY(-3px)}}
+@media(max-width:390px){.traveler-device{width:100%}}
+@media(prefers-reduced-motion:reduce){.today-before-close>img,.demo-evening-notice{animation:none}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<style>a{color:#004E64}a:hover{color:#00303D}button{font:inherit;color:inherit}button:focus-visible{outline:2px solid #004E64;outline-offset:2px}@media (prefers-reduced-motion: reduce){*{transition:none !important}}</style>
+<style>.today-app{margin:-8px -20px -28px;padding:0 14px 20px;background:#FAF7F2;color:#10262D;font-family:Satoshi,system-ui,sans-serif}.today-app *{box-sizing:border-box}.today-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 1px 11px;border-bottom:1px solid #E9E3D8}.today-head>div{display:flex;flex-direction:column;gap:3px}.today-head>div span{font-size:10px;color:#53676C}.today-head>div b,.today-head strong,.today-eyebrow,.today-note>small,.today-wander span,.today-section-head>span,.today-place small,.today-place div>span,.today-plan-hero>div>span,.today-weather>div span,.today-upnext small{font:7px ui-monospace,monospace;letter-spacing:.08em;color:#738284}.today-head strong{padding:6px 8px;border-radius:99px;background:#E3EEF0;color:#075B6D;white-space:nowrap}.today-hero{position:relative;height:220px;margin:0 -14px 16px;overflow:hidden;background:#173A43}.today-hero>img,.today-plan-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.today-hero:after,.today-plan-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#072c3320,#082d35e8)}.today-hero-copy{position:absolute;z-index:1;left:15px;right:15px;bottom:15px;color:#fff}.today-hero-copy>span,.today-plan-hero>div>span{color:#F5D4A7}.today-hero-copy h2{margin:7px 0 5px;color:#fff;font:500 30px/.95 Georgia,serif;letter-spacing:-.03em}.today-hero-copy h2 em{color:#FFD79D;font-weight:400}.today-hero-copy p{margin:0;color:#F3F0E8;font-size:9px}.today-clock{position:absolute;z-index:1;right:12px;top:12px;display:flex;flex-direction:column;align-items:flex-end;color:#fff;text-shadow:0 1px 8px #00252d}.today-clock span,.today-clock small{font:6px ui-monospace,monospace;letter-spacing:.08em}.today-clock b{font:600 21px ui-monospace,monospace}.today-note{padding:0 2px 15px;border-bottom:1px solid #E9E3D8}.today-eyebrow{display:block;color:#698082}.today-note>small{display:block;margin:7px 0 6px;color:#9A7555;font-size:6px}.today-note h3,.today-section-head h3,.today-rate h3,.today-swap h3{margin:0;color:#173B43;font:500 20px/1.02 Georgia,serif}.today-note p{margin:8px 0 11px;color:#657477;font-size:9px;line-height:1.5}.today-wander{display:flex;justify-content:space-between;gap:8px;padding:9px 10px;border:1px solid #E6DFD3;border-radius:10px;background:#fff}.today-wander span{font-size:6px}.today-wander b{font-size:8px;text-align:right}.today-section{padding:15px 0}.today-section-head{display:flex;justify-content:space-between;align-items:end;gap:8px;margin:6px 0 9px}.today-section-head h3{font-size:19px}.today-section-head>span{white-space:nowrap;font-size:6px}.today-rail{display:flex;gap:9px;margin-right:-14px;padding:0 14px 7px 0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#c5cec8 transparent}.today-place,.today-memories article{position:relative;flex:0 0 220px;min-height:244px;overflow:hidden;border:1px solid #E8E0D5;border-radius:13px;background:#fff;scroll-snap-align:start}.today-place>img{display:block;width:100%;height:108px;object-fit:cover}.today-place>button{position:absolute;top:8px;right:8px;width:30px;height:30px;border:0;border-radius:50%;background:#fff;color:#a45145;font-size:19px;box-shadow:0 2px 10px #10262d30;cursor:pointer}.today-place>div{display:flex;flex-direction:column;gap:4px;padding:9px 10px}.today-place small{font-size:6px}.today-place b{font-size:11px}.today-place p{margin:0;color:#657477;font-size:8px;line-height:1.4}.today-place div>span{font-size:7px}.today-light{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0 2px}.today-light>div{position:relative;height:140px;overflow:hidden;border:1px solid #E8E0D5;border-radius:13px;background:#173d46}.today-light img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}.today-light>div:after{content:"";position:absolute;inset:30% 0 0;background:linear-gradient(180deg,transparent,#071f27c9);pointer-events:none}.today-light b{position:absolute;z-index:1;left:9px;right:8px;bottom:9px;color:#fff;font:500 14px/1.1 Georgia,serif;text-shadow:0 1px 8px #071f27}.today-close{position:relative;margin:0 -14px;padding:18px 15px;background:#0B3E49;color:#fff;overflow:hidden}.today-close .today-eyebrow{color:#C1D5D2}.today-close h3{position:relative;margin:8px 0;color:#fff;font:500 25px/.98 Georgia,serif}.today-close p{margin:9px 0;color:#F4CF9F;font:500 18px Georgia,serif}.today-close small{color:#D1DFDC;font-size:7px}.today-before-close>img{position:absolute;z-index:0;right:16px;top:10px;width:66px;height:72px;object-fit:cover;object-position:center;border:1px solid #fff8;border-radius:16px;box-shadow:0 5px 12px #061e2445;transform:rotate(5deg);transform-origin:50% 78%;animation:maple-float 7s ease-in-out infinite}.today-before-close p{max-width:245px;color:#E5EFEC;font:9px/1.45 Satoshi,system-ui,sans-serif}.today-before-close button,.today-rate button,.today-approve{min-height:40px;padding:0 13px;border:0;border-radius:999px;background:#F3C985;color:#17353C;font-size:9px;font-weight:700;cursor:pointer}.today-before-close button{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:5px}.today-plan-hero{position:relative;height:132px;margin:0 -14px 12px;overflow:hidden;background:#143b45}.today-plan-hero>div{position:absolute;z-index:1;left:13px;right:63px;bottom:12px;color:#fff}.today-plan-hero h2{margin:5px 0 0;color:#fff;font:500 21px/.98 Georgia,serif}.today-plan-hero>div>span{font-size:6px}.today-temp{position:absolute;z-index:2;top:12px;right:12px;padding:6px 8px;border-radius:99px;background:#fff;color:#075B6D;font-size:9px}.today-weather{padding:11px;border:1px solid #F1D986;border-radius:13px;background:#FFF4CC}.today-weather>div{display:flex;justify-content:space-between;align-items:center;color:#725700;font-size:7px}.today-weather>div span{font-size:6px}.today-weather h3{margin:7px 0 4px;font-size:11px}.today-weather p{margin:0;color:#5f4d1d;font-size:8px;line-height:1.45}.today-weather button{margin-top:5px;padding:3px 0;border:0;background:none;color:#075B6D;font-size:8px;font-weight:700}.today-agenda{padding:14px 1px}.today-agenda .today-section-head{margin-top:0}.today-agenda article{display:grid;grid-template-columns:43px 1fr;gap:8px;padding:10px 2px;border-bottom:1px solid #E9E3D8}.today-agenda time{color:#075B6D;font:700 9px ui-monospace,monospace}.today-agenda article b{font-size:9px;line-height:1.3}.today-agenda article p{margin:3px 0 5px;color:#657477;font-size:8px}.today-agenda article small{display:inline-block;padding:4px 7px;border-radius:99px;background:#E3EEF0;color:#075B6D;font-size:7px}.today-agenda article .today-warn{background:#FFF0C2;color:#725700}.today-agenda .today-section-head>span{padding:5px 7px;border-radius:99px;background:#E9E4DA}.today-rate{display:flex;flex-direction:column;gap:9px;padding:12px;border:1px solid #E7DFD3;border-radius:13px;background:#fff}.today-rate h3{margin-top:4px;font-size:17px}.today-rate p{margin:4px 0 0;color:#657477;font-size:8px}.today-rate button,.today-approve{background:#00596E;color:#fff}.today-upnext{margin-top:11px;padding:11px;border-radius:13px;background:#F1EDE5}.today-upnext h3{margin:6px 0 8px;font:500 16px Georgia,serif}.today-upnext>div{display:flex;gap:9px;padding:7px;border-radius:9px;background:#fff}.today-upnext img{width:49px;height:47px;object-fit:cover;border-radius:6px}.today-upnext p{display:flex;flex-direction:column;gap:3px;margin:0}.today-upnext small{font-size:6px}.today-upnext b{font-size:9px}.today-upnext span{color:#657477;font-size:7px}.today-swap{margin-top:11px;padding:11px;border:1px solid #DED7CB;border-radius:14px;background:#fff}.today-swap .today-section-head h3{margin-top:4px;font-size:16px}.today-swap .today-section-head>span{padding:5px 7px;border-radius:99px;background:#E9E4DA}.today-swap>p{margin:9px 0 0;color:#58696D;font-size:8px}.today-swap-change{display:flex;gap:8px;align-items:center;margin-top:8px;padding:9px;border-radius:10px;background:#FFF1EA}.today-swap-change>div{display:flex;flex:1;flex-direction:column;gap:5px}.today-swap-change del,.today-swap-change small{font-size:7px;color:#657477}.today-swap-change b{font-size:9px}.today-swap-change img{width:58px;height:58px;object-fit:cover;border-radius:7px}.today-confirm{margin-top:9px;padding:8px;border-radius:8px;background:#E2F2E8;color:#1E6B43;font-size:8px}.today-approve{width:100%;margin-top:10px}.today-keep{width:100%;height:35px;border:0;background:none;color:#075B6D;font-size:9px;font-weight:700}.today-memories article{flex-basis:180px;min-height:140px;height:140px;background:#173d46}.today-memories img{width:100%;height:100%;object-fit:cover}.today-memories b{position:absolute;left:9px;bottom:8px;color:#fff;font-size:8px;text-shadow:0 1px 8px #000}.today-after-close{padding-top:15px}.today-after-close h3{margin:0}.today-after-close p{margin:9px 0 3px}@media(max-width:390px){.today-place{flex-basis:205px}.today-note h3{font-size:19px}}@media(prefers-reduced-motion:reduce){.today-app *{scroll-behavior:auto!important;transition:none!important}}</style>
+<style>
+.shape-page{display:flex;flex-direction:column;gap:12px;color:#10262D}
+.shape-heading{display:flex;flex-direction:column;gap:5px}
+.shape-brand{font-size:10px;color:#65777A}
+.shape-kicker,.shape-destination-copy>span,.shape-estimate-label,.shape-confidence-label{font:700 7px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}
+.shape-kicker{color:#A46B48;margin-top:2px}
+.shape-heading h1{margin:0;color:#10262D;font:800 27px/1.02 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:-.04em}
+.shape-heading p{margin:1px 0 0;color:#657477;font-size:9px;line-height:1.4}
+.shape-destination{height:118px;position:relative;overflow:hidden;border-radius:15px;background:#173A43;box-shadow:0 8px 20px #092f3816}
+.shape-destination>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shape-destination:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#062832e8 0%,#082c35a8 48%,#092d3520 100%)}
+.shape-destination-copy{position:absolute;z-index:1;left:14px;bottom:13px;display:flex;flex-direction:column;gap:3px;color:#fff}
+.shape-destination-copy>span{color:#D5C3A6}
+.shape-destination-copy>b{font:500 26px/.95 Georgia,serif}
+.shape-destination-copy>small{font-size:8px;color:#F0F2EC}
+.shape-destination-pin{position:absolute;z-index:1;right:12px;top:12px;width:31px;height:31px;display:grid;place-items:center;border:1px solid #ffffff75;border-radius:50%;color:#fff;background:#ffffff20;backdrop-filter:blur(6px)}
+.shape-facts{display:flex;flex-direction:column;gap:8px}
+.shape-fact{min-height:61px;display:flex;align-items:center;gap:11px;padding:9px 11px;border:1px solid #E7DFD3;border-radius:13px;background:#fff;box-shadow:0 3px 10px #10262d08}
+.shape-fact>i{width:31px;height:31px;flex:none;display:grid;place-items:center;border-radius:10px;background:#E8F0EF;color:#075B6D;font-size:17px}
+.shape-fact-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}
+.shape-fact-copy>small{font:700 7px ui-monospace,monospace;letter-spacing:.1em;color:#718184}
+.shape-fact-copy>b{font-size:11px;line-height:1.2}
+.shape-fact-copy>span{font-size:8px;color:#748184}
+.shape-stepper{display:flex;gap:6px}
+.shape-stepper button{width:30px;height:30px;display:grid;place-items:center;border:1px solid #DED7CC;border-radius:50%;background:#FAF7F2;color:#075B6D;cursor:pointer;transition:background .18s,transform .18s}
+.shape-stepper button:hover{background:#E4EFED;transform:translateY(-1px)}
+.shape-estimate{display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:17px;background:linear-gradient(145deg,#063B47 0%,#075B6D 58%,#0B6572 100%);color:#fff;box-shadow:0 10px 22px #004e6425}
+.shape-estimate-head{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.shape-estimate-title{display:flex;flex-direction:column;gap:4px}
+.shape-estimate-label{color:#C3DDE0}
+.shape-estimate-title small{font-size:7px;color:#E1ECE8}
+.shape-confidence-chip{padding:5px 7px;border:1px solid #ffffff35;border-radius:99px;background:#ffffff12;color:#F8D6A7;font:700 7px ui-monospace,monospace;white-space:nowrap}
+.shape-price{font:800 27px/1 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:-.035em}
+.shape-estimate-note{margin:-4px 0 0;color:#D6E6E4;font-size:7px;line-height:1.4}
+.shape-costs{display:flex;flex-direction:column}
+.shape-costs>div{min-height:36px;display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #ffffff24}
+.shape-costs>div>i{width:25px;height:25px;display:grid;place-items:center;border-radius:8px;background:#ffffff17;color:#F4C589;font-size:14px}
+.shape-cost-copy{display:flex;flex:1;flex-direction:column;gap:2px}
+.shape-cost-copy>b{font-size:9px}
+.shape-cost-copy>small{font-size:7px;color:#C8DDDC}
+.shape-costs>div>strong{font-size:9px;white-space:nowrap}
+.shape-confidence{display:flex;flex-direction:column;gap:5px}
+.shape-confidence-bar{height:5px;overflow:hidden;border-radius:99px;background:#ffffff30}
+.shape-confidence-bar>span{display:block;width:70%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#F3A36C,#F7D39C)}
+.shape-confidence-label{color:#D8E7E3;font-size:6px;letter-spacing:.06em;text-transform:none}
+.shape-budget-cap{display:flex;justify-content:space-between;align-items:center;padding-top:9px;border-top:1px solid #ffffff35}
+.shape-budget-cap>span{font-size:8px;color:#E3EEEA}
+.shape-budget-cap>b{font:800 14px 'Plus Jakarta Sans',system-ui,sans-serif}
+.shape-book{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border:0;border-radius:999px;background:linear-gradient(105deg,#A94B2F 0%,#C95E35 55%,#DE7741 100%);color:#fff;font-size:11px;font-weight:700;box-shadow:0 8px 18px #a94b2f27;cursor:pointer;transition:filter .2s,transform .2s}
+.shape-book:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.shape-book>i{font-size:18px;-webkit-text-stroke:.55px currentColor}
+.shape-sent{display:flex;gap:10px;align-items:flex-start;padding:13px;border:1px solid #BBD9CA;border-radius:13px;background:#E7F3EB;color:#1E6B43}
+.shape-sent>i{font-size:21px}
+.shape-sent>div{display:flex;flex-direction:column;gap:3px}
+.shape-sent b{font-size:10px}
+.shape-sent p{margin:0;font-size:8px;line-height:1.4}
+.today-before-close button{background:linear-gradient(105deg,#073B47 0%,#075B6C 58%,#117887 100%);color:#fff}
+.today-before-close button>i{font-size:19px;font-weight:700;-webkit-text-stroke:.65px currentColor}
+</style>
+<style>
+.budget-page{display:flex;flex-direction:column;gap:13px;padding-bottom:5px;color:#10262D}
+.budget-head{display:flex;justify-content:space-between;align-items:flex-start;gap:9px}
+.budget-head-copy{display:flex;flex-direction:column;gap:4px;min-width:0}
+.budget-eyebrow{color:#718184;font:700 8px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}
+.budget-head h1{margin:0;color:#10262D;font:800 28px/1 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:-.04em}
+.budget-head p{margin:2px 0 0;color:#657477;font-size:9px}
+.budget-cap{display:flex;flex-direction:column;gap:3px;flex:none;padding:8px 10px;border:1px solid #fff;border-radius:13px;background:#F7F2E9;box-shadow:4px 4px 9px #ded7cb,-4px -4px 9px #fffdf8}
+.budget-cap span,.budget-cap small{color:#718184;font:700 7px ui-monospace,monospace;letter-spacing:.08em}
+.budget-cap b{color:#075B6D;font:800 14px 'Plus Jakarta Sans',system-ui,sans-serif}
+.budget-progress-label{display:flex;justify-content:space-between;margin:0 2px -8px;color:#657477;font-size:8px}
+.budget-progress-label b{color:#075B6D}
+.budget-progress{height:7px;overflow:hidden;border-radius:99px;background:#E9E2D7;box-shadow:inset 2px 2px 4px #d9d1c5,inset -1px -1px 3px #fff}
+.budget-progress>span{display:block;width:40%;height:100%;border-radius:99px;background:linear-gradient(90deg,#28C2DF 0%,#55D7C7 48%,#FFA45E 100%);box-shadow:0 1px 5px #2bbbd977}
+.budget-overview{padding:12px;border:1px solid #fff;border-radius:19px;background:#F7F3EC;box-shadow:6px 6px 14px #ded8ce,-6px -6px 14px #fffdf8}
+.budget-overview-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.budget-overview-head>div{display:flex;flex-direction:column;gap:3px}
+.budget-overview-head>div span{color:#748486;font:700 7px ui-monospace,monospace;letter-spacing:.1em}
+.budget-overview-head>div b{font:700 12px 'Plus Jakarta Sans',system-ui,sans-serif}
+.budget-status{display:inline-flex;align-items:center;gap:4px;padding:5px 8px;border-radius:99px;font-size:8px;font-weight:800}
+.budget-chart-layout{display:flex;align-items:center;gap:8px;min-width:0}
+.budget-chart-well{display:grid;place-items:center;width:152px;height:128px;flex:none;border:1px solid #fff9;border-radius:19px;background:#F5F0E7;box-shadow:inset 4px 4px 9px #e4ddd2,inset -4px -4px 9px #fffdf8}
+.budget-pie3d{display:block;width:148px;height:89px;flex:none;overflow:visible;filter:drop-shadow(0 8px 6px #10262d32)}
+.budget-pie3d .spent-side{fill:#BE4B31}
+.budget-pie3d .available-side{fill:#13788A}
+.budget-pie3d .split-wall{fill:#0C5967;opacity:.9}
+.budget-pie3d .spent-face{fill:#FF704B}
+.budget-pie3d .available-face{fill:#25C5E2}
+.budget-pie3d .pie-top{stroke:#FFF9;stroke-width:1.5;stroke-linejoin:round}
+.budget-forecast{display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;padding:5px 0}
+.budget-forecast>small{color:#748486;font:700 7px ui-monospace,monospace;letter-spacing:.09em}
+.budget-forecast-total{color:#075B6D;font:800 21px/1 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.budget-delta{padding:4px 7px;border-radius:99px;font-size:8px;font-weight:800}
+.budget-delta.over{background:#FFE0D3;color:#B64025}
+.budget-delta.under{background:#D8F5E8;color:#18714D}
+.budget-delta.at-cap{background:#FFF0BF;color:#845800}
+.budget-forecast p{margin:0;color:#5F7073;font-size:8px;line-height:1.4}
+.budget-cap-note{color:#718184;font-size:7px}
+.budget-legend{display:flex;justify-content:center;gap:18px;margin:9px 0 0;padding-top:8px;border-top:1px solid #E7E0D6;color:#53676C;font-size:8px}
+.budget-legend span{display:inline-flex;align-items:center;gap:5px}
+.budget-legend i{width:8px;height:8px;border-radius:50%;box-shadow:inset 1px 1px 2px #fff8}
+.budget-legend .spent-dot{background:#FF704B}.budget-legend .available-dot{background:#25C5E2}
+.budget-swaps{display:flex;flex-direction:column;gap:7px}
+.budget-swaps-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:0 2px}
+.budget-swaps-head>div{display:flex;flex-direction:column;gap:3px}
+.budget-swaps-head b{font:700 14px 'Plus Jakarta Sans',system-ui,sans-serif}
+.budget-swaps-head small{color:#657477;font-size:8px}
+.budget-savings{padding:5px 7px;border-radius:99px;background:#D8F5E8;color:#18714D;font-size:8px;font-weight:800;white-space:nowrap}
+.budget-swap-card{display:flex;align-items:center;gap:9px;width:100%;min-height:55px;padding:8px 9px;border:1px solid #E5DDD1;border-radius:13px;background:linear-gradient(145deg,#fffdf9,#F5F0E8);box-shadow:3px 3px 7px #e3dcd1,-3px -3px 7px #fff;cursor:pointer;text-align:left;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.budget-swap-card:hover{transform:translateY(-1px);box-shadow:4px 5px 9px #ded6ca,-3px -3px 7px #fff}
+.budget-swap-card.selected{border-color:#FF956F;background:linear-gradient(145deg,#FFF9F4,#FFEDE3);box-shadow:inset 2px 2px 5px #f4d8ca,inset -2px -2px 5px #fff}
+.budget-swap-icon{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:10px;background:#E0F8FC;color:#07849A;font-size:16px}
+.budget-swap-card.selected .budget-swap-icon{background:#FFDED0;color:#C34B2C}
+.budget-swap-copy{display:flex;flex:1;flex-direction:column;gap:2px;min-width:0}
+.budget-swap-copy b{font-size:9px;line-height:1.25}
+.budget-swap-copy small{color:#657477;font-size:7px;line-height:1.3}
+.budget-swap-action{display:flex;flex:none;flex-direction:column;align-items:flex-end;gap:2px;color:#18714D;font-size:10px;font-weight:800;white-space:nowrap}
+.budget-swap-action small{color:#718184;font-size:7px;font-weight:600}
+.budget-event{display:flex;flex-direction:column;gap:6px;padding:11px 12px;border:1px solid #FFD9A4;border-radius:16px;background:linear-gradient(145deg,#FFF9E9,#FFF0CF);box-shadow:4px 4px 9px #e8dec9,-3px -3px 8px #fff}
+.budget-event-label{display:flex;align-items:center;gap:6px;color:#9B5B12;font:800 8px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
+.budget-event-label i{display:grid;place-items:center;width:22px;height:22px;border-radius:8px;background:#FFE0B6;color:#E1792D;font-size:13px}
+.budget-event b{color:#362B1D;font-size:10px;line-height:1.3}
+.budget-event p{margin:0;color:#69583D;font-size:8px;line-height:1.45}
+.budget-event small{color:#9B7040;font:7px ui-monospace,monospace}
+@media(max-width:360px){.budget-chart-well{width:136px}.budget-pie3d{width:132px;height:80px}.budget-chart-layout{gap:5px}.budget-overview{padding:10px}.budget-head h1{font-size:25px}}
+@media(prefers-reduced-motion:reduce){.budget-swap-card{transition:none}}
+.nearby-page{display:flex;flex-direction:column;gap:12px;padding-bottom:5px;color:#10262D}
+.nearby-head{display:flex;flex-direction:column;gap:4px}
+.nearby-head h1{margin:0;font:800 28px/1.05 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:-.04em}
+.nearby-head p{margin:0;color:#627276;font-size:10px}
+.nearby-map{position:relative;height:204px;overflow:hidden;border:1px solid #fff;border-radius:18px;background:#18323B;box-shadow:4px 5px 12px #10262d24;isolation:isolate}
+.nearby-map-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent 0 40px,var(--map-street) 40px 44px),repeating-linear-gradient(90deg,transparent 0 54px,var(--map-street) 54px 58px)}
+.nearby-map-lake{position:absolute;left:0;right:0;bottom:0;height:36px;background:var(--map-lake)}
+.nearby-map-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.nearby-road-label{fill:var(--map-label);font:700 7px ui-monospace,monospace;letter-spacing:.08em;opacity:.88}
+.nearby-route-alt{fill:none;stroke:#A8B8B9;stroke-width:3;stroke-dasharray:4 6;stroke-linecap:round;stroke-linejoin:round;opacity:.82}
+.nearby-route-main{fill:none;stroke:#FF754B;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 2px #10262d66)}
+.nearby-map-badge{position:absolute;z-index:2;top:9px;left:9px;padding:5px 7px;border:1px solid #ffffff55;border-radius:99px;background:#10262dcc;color:#fff;font:700 7px ui-monospace,monospace;letter-spacing:.08em}
+.nearby-map-pin{position:absolute;z-index:2;display:grid;place-items:center;width:29px;height:29px;padding:0;transform:translate(-50%,-50%);border:2px solid #075B6D;border-radius:50%;background:#fff;color:#075B6D;box-shadow:0 2px 7px #10262d45;cursor:pointer;transition:transform .16s ease,box-shadow .16s ease}
+.nearby-map-pin i{font-size:14px}
+.nearby-map-pin:hover,.nearby-map-pin.selected{z-index:3;transform:translate(-50%,-50%) scale(1.14);box-shadow:0 0 0 4px #ffffffb8,0 3px 8px #10262d55}
+.nearby-map-pin.selected{border-color:#FF754B;color:#B74325}
+.nearby-map-place-label{position:absolute;z-index:2;top:100%;left:50%;padding-top:3px;transform:translateX(-50%);color:#fff;font:700 6px ui-monospace,monospace;white-space:nowrap;text-shadow:0 1px 3px #10262d}
+.nearby-map-hotel,.nearby-map-dinner{position:absolute;z-index:2;display:grid;place-items:center;border:2px solid #fff;border-radius:50%;box-shadow:0 2px 8px #10262d55;color:#fff}
+.nearby-map-hotel{left:180px;top:118px;width:32px;height:32px;transform:translate(-50%,-50%);background:#075B6D}
+.nearby-map-dinner{left:44px;top:62px;width:27px;height:27px;transform:translate(-50%,-50%);background:#FF754B;color:#10262D}
+.nearby-map-hotel i{font-size:15px}.nearby-map-dinner i{font-size:13px}
+.nearby-map-hotel-label,.nearby-map-dinner-label{position:absolute;left:50%;top:calc(100% + 3px);transform:translateX(-50%);font:700 6px ui-monospace,monospace;white-space:nowrap;text-shadow:0 1px 3px #10262d}
+.nearby-map-callout{position:absolute;z-index:1;right:9px;bottom:8px;padding:5px 7px;border:1px solid #ffffff55;border-radius:99px;background:#10262dcc;color:#fff;font-size:7px;font-weight:700}
+.nearby-selected{display:flex;flex-direction:column;gap:8px;padding:10px 11px;border:1px solid #D5E3E2;border-radius:14px;background:linear-gradient(145deg,#fffdf9,#F1F7F5);box-shadow:3px 4px 9px #dce5e0,-2px -2px 6px #fff}
+.nearby-selected-top{display:flex;align-items:flex-start;gap:8px}
+.nearby-selected-icon{display:grid;place-items:center;width:28px;height:28px;flex:none;border-radius:9px;background:#DDF4F5;color:#087487;font-size:15px}
+.nearby-selected-copy{display:flex;flex:1;flex-direction:column;gap:2px;min-width:0}
+.nearby-selected-copy b{font-size:10px;line-height:1.3}
+.nearby-selected-copy span,.nearby-selected-copy small{color:#68797B;font-size:8px;line-height:1.35}
+.nearby-selected-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;color:#53676C;font-size:8px}
+.nearby-selected-meta strong{color:#075B6D}
+.nearby-route-action{min-height:32px;padding:0 10px;border:0;border-radius:99px;background:#075B6D;color:#fff;font-size:8px;font-weight:800;cursor:pointer}
+.nearby-route-card{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid #fff;border-radius:15px;background:#F7F3EC;box-shadow:4px 4px 10px #ded8ce,-4px -4px 10px #fffdf8}
+.nearby-route-icon{display:grid;place-items:center;width:31px;height:31px;flex:none;border-radius:10px;background:#DFF3F4;color:#075B6D;font-size:16px}
+.nearby-route-copy{display:flex;flex:1;flex-direction:column;gap:3px;min-width:0}
+.nearby-route-copy b{font-size:10px;line-height:1.3}
+.nearby-route-copy span{color:#637477;font-size:8px;line-height:1.35}
+.nearby-route-copy button{align-self:flex-start;padding:2px 0;border:0;background:none;color:#075B6D;font-size:8px;font-weight:800;cursor:pointer}
+.nearby-switch{position:relative;width:39px;height:24px;flex:none;padding:0;border:0;border-radius:99px;background:#C9C2B6;cursor:pointer}
+.nearby-switch[aria-pressed="true"]{background:#075B6D}
+.nearby-switch span{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #10262d33;transition:left .18s ease}
+.nearby-switch[aria-pressed="true"] span{left:18px}
+.nearby-emergency{display:flex;align-items:flex-start;gap:7px;padding:8px 10px;border:1px solid #F0D9C9;border-radius:11px;background:#FFF8F1;color:#68564A;font-size:8px;line-height:1.4}
+.nearby-emergency i{flex:none;color:#B75B36;font-size:14px}
+.nearby-emergency strong{color:#8B4228}
+.nearby-essentials{display:flex;flex-direction:column;gap:8px}
+.nearby-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 1px}
+.nearby-section-head b{font:700 13px 'Plus Jakarta Sans',system-ui,sans-serif}
+.nearby-section-head span{color:#708082;font-size:8px}
+.nearby-filters{display:flex;flex-wrap:wrap;gap:5px}
+.nearby-filter{display:inline-flex;align-items:center;gap:4px;min-height:28px;padding:0 8px;border:1px solid #D9D3C8;border-radius:99px;background:#fff;color:#075B6D;font-size:8px;font-weight:700;cursor:pointer;transition:background .15s ease,color .15s ease}
+.nearby-filter.active{border-color:#075B6D;background:#075B6D;color:#fff}
+.nearby-filter.locked{border-style:dashed;background:transparent;color:#55686E}
+.nearby-filter i{font-size:11px}
+.nearby-place-list{display:flex;flex-direction:column;gap:5px}
+.nearby-place-row{display:flex;align-items:center;gap:8px;width:100%;min-height:53px;padding:7px;border:1px solid transparent;border-bottom-color:#EAE5DC;border-radius:12px;background:transparent;color:#10262D;text-align:left;cursor:pointer;transition:border-color .15s ease,background .15s ease,box-shadow .15s ease}
+.nearby-place-row:hover,.nearby-place-row.selected{border-color:#C9E0DF;background:#F1F8F6;box-shadow:2px 3px 7px #dfe9e5}
+.nearby-place-icon{display:grid;place-items:center;width:29px;height:29px;flex:none;border-radius:10px;background:#E3EEF0;color:#075B6D;font-size:15px}
+.nearby-place-copy{display:flex;flex:1;flex-direction:column;gap:3px;min-width:0}
+.nearby-place-copy b{font-size:9px;line-height:1.25}
+.nearby-place-copy small{overflow:hidden;color:#6B7B80;font-size:7px;line-height:1.35;text-overflow:ellipsis;white-space:nowrap}
+.nearby-place-walk{display:flex;flex:none;flex-direction:column;align-items:flex-end;gap:2px;color:#075B6D;font-size:9px;font-weight:800;white-space:nowrap}
+.nearby-place-walk small{color:#708082;font-size:7px;font-weight:600}
+.nearby-empty{padding:12px;border:1px dashed #CFC8BC;border-radius:12px;color:#637477;font-size:9px;line-height:1.4;text-align:center}
+.nearby-empty button{display:block;margin:5px auto 0;padding:4px 8px;border:0;background:none;color:#075B6D;font-size:8px;font-weight:800;cursor:pointer}
+@media(max-width:360px){.nearby-map{height:188px}.nearby-head h1{font-size:25px}.nearby-page{gap:10px}}
+@media(prefers-reduced-motion:reduce){.nearby-map-pin,.nearby-place-row,.nearby-filter,.nearby-switch span{transition:none}}
+.trip-page{display:flex;flex-direction:column;gap:11px;padding-bottom:5px;color:#10262D}
+.trip-head{display:flex;flex-direction:column;gap:4px}
+.trip-head h1{margin:0;font:800 28px/1.05 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:-.04em}
+.trip-head p{margin:0;color:#637477;font-size:9px}
+.trip-itinerary{display:flex;flex-direction:column;padding:7px 11px;border:1px solid #fff;border-radius:16px;background:#F7F3EC;box-shadow:4px 4px 10px #ded8ce,-4px -4px 10px #fffdf8}
+.trip-itinerary-label{padding:2px 2px 5px;color:#748486;font:700 7px ui-monospace,monospace;letter-spacing:.12em}
+.trip-leg{position:relative;display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;padding:7px 0}
+.trip-leg+.trip-leg{border-top:1px solid #E8E1D6}
+.trip-leg-marker{position:relative;display:flex;justify-content:center;padding-top:2px;color:#08758A;font-size:16px}
+.trip-leg:first-of-type .trip-leg-marker{color:#C75A3A}
+.trip-leg-marker::after{position:absolute;top:22px;bottom:-9px;left:50%;width:1px;background:#C8D6D4;content:""}
+.trip-leg:last-child .trip-leg-marker::after{display:none}
+.trip-leg-content{display:flex;flex-direction:column;gap:5px;min-width:0}
+.trip-leg-top{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.trip-leg-label{color:#748486;font:700 7px ui-monospace,monospace;letter-spacing:.08em}
+.trip-leg-status{display:inline-flex;align-items:center;gap:4px;padding:4px 6px;border-radius:99px;background:#FFE4D9;color:#9A452C;font-size:7px;font-weight:800;white-space:nowrap}
+.trip-leg-status.ontime{background:#E0F1E7;color:#256B4B}
+.trip-leg-route{display:flex;align-items:center;gap:7px}
+.trip-leg-route strong{color:#10262D;font:800 14px 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:.02em}
+.trip-leg-line{display:flex;flex:1;align-items:center;gap:3px;max-width:82px;color:#6B7B80}
+.trip-leg-line::before,.trip-leg-line::after{height:1px;flex:1;background:#C8D3D0;content:""}
+.trip-leg-line i{font-size:13px;color:#075B6D}
+.trip-leg-meta{color:#627276;font-size:8px;line-height:1.35}
+.trip-claim{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:8px;padding:13px;border:1px solid #146879;border-radius:18px;background:radial-gradient(ellipse at 100% 0%,#147387 0%,transparent 42%),linear-gradient(145deg,#073B47 0%,#075B6D 58%,#0C6C7C 100%);color:#fff;box-shadow:4px 5px 12px #073b4730}
+.trip-claim-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.trip-claim-label{display:flex;align-items:center;gap:5px;color:#C7E3E7;font:700 7px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
+.trip-claim-label i{color:#FF9B72;font-size:13px}
+.trip-claim-estimate{padding:4px 6px;border:1px solid #ffffff35;border-radius:99px;color:#E4F2F4;font-size:7px;font-weight:700}
+.trip-claim-headline{display:flex;justify-content:space-between;align-items:flex-end;gap:8px}
+.trip-claim-headline b{max-width:190px;font:700 13px/1.25 'Plus Jakarta Sans',system-ui,sans-serif}
+.trip-claim-amount{flex:none;color:#fff;font:800 22px/1 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:-.04em}
+.trip-evidence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+.trip-evidence-item{display:flex;flex-direction:column;gap:3px;min-width:0;padding:6px;border:1px solid #ffffff26;border-radius:9px;background:#ffffff0d}
+.trip-evidence-item b{overflow:hidden;color:#fff;font-size:8px;text-overflow:ellipsis;white-space:nowrap}
+.trip-evidence-item small{color:#C3DFE3;font-size:6px;line-height:1.3}
+.trip-claim-copy{margin:0;color:#D8EBED;font-size:8px;line-height:1.45}
+.trip-steps{display:flex;align-items:center;justify-content:space-between;gap:4px;color:#D8EBED;font-size:6px;font-weight:700}
+.trip-steps span{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
+.trip-steps b{display:grid;place-items:center;width:13px;height:13px;border-radius:50%;background:#ffffff20;color:#fff;font-size:6px}
+.trip-steps i{color:#8EBFC7;font-size:8px}
+.trip-claim-button{min-height:38px;border:0;border-radius:99px;background:#FFFDF8;color:#075B6D;font-size:9px;font-weight:800;cursor:pointer;transition:background .15s ease,transform .15s ease}
+.trip-claim-button:hover{transform:translateY(-1px);background:#E5F2F2}
+.trip-claim-note{margin:0;color:#C3DFE3;font-size:7px;line-height:1.35;text-align:center}
+.trip-offline{display:flex;flex-direction:column;gap:9px;padding:11px;border:1px solid #fff;border-radius:16px;background:linear-gradient(145deg,#fffdf9,#F3F5EF);box-shadow:4px 4px 10px #ded8ce,-4px -4px 10px #fffdf8}
+.trip-offline-head{display:flex;align-items:center;gap:8px}
+.trip-offline-icon{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:10px;background:#DFF3F4;color:#08758A;font-size:16px}
+.trip-offline-copy{display:flex;flex:1;flex-direction:column;gap:2px;min-width:0}
+.trip-offline-copy b{font-size:10px}
+.trip-offline-copy small{color:#728183;font-size:7px}
+.trip-offline-state{padding:4px 6px;border-radius:99px;background:#DCF2E5;color:#226B49;font-size:6px;font-weight:800;white-space:nowrap}
+.trip-offline-state.demo{background:#FFF0D3;color:#805B20}
+.trip-offline-toggle{position:relative;width:38px;height:23px;flex:none;padding:0;border:0;border-radius:99px;background:#C9C2B6;cursor:pointer}
+.trip-offline-toggle[aria-pressed="true"]{background:#075B6D}
+.trip-offline-toggle span{position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #10262d33;transition:left .18s ease}
+.trip-offline-toggle[aria-pressed="true"] span{left:18px}
+.trip-offline-demo-note{margin:-4px 0 0 38px;color:#805B20;font-size:7px;line-height:1.35}
+.trip-offline-coverage{display:flex;flex-wrap:wrap;gap:5px;padding-top:7px;border-top:1px solid #E7E2D9}
+.trip-offline-coverage span{display:inline-flex;align-items:center;gap:4px;padding:5px 6px;border:1px solid #E5EDE8;border-radius:99px;background:#F6FAF6;color:#50676B;font-size:7px;font-weight:700;white-space:nowrap}
+.trip-offline-coverage i{color:#18714D;font-size:10px}
+@media(max-width:360px){.trip-page{gap:9px}.trip-head h1{font-size:25px}.trip-claim{padding:11px}.trip-claim-headline b{font-size:12px}.trip-claim-amount{font-size:20px}.trip-offline-coverage{gap:4px}}
+@media(prefers-reduced-motion:reduce){.trip-offline-toggle span,.trip-claim-button{transition:none}}
+</style>
+</helmet>
+<div class="traveler-device {{ deviceClass }}">
+<div class="traveler-screen">
+
+<div style="height:48px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 30px;font-weight:700;font-size:15px">
+  <span>{{ demoClockTime }}</span>
+  <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}">
+    <span style="display:flex;gap:6px;align-items:center;font-size:13px;color:#B42336"><i class="ph ph-cell-signal-slash" style="font-size:17px"></i>No signal</span>
+  </sc-if>
+  <sc-if value="{{ online }}" hint-placeholder-val="{{ true }}">
+    <span style="display:flex;gap:6px;align-items:center;font-size:17px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span>
+  </sc-if>
+</div>
+<sc-if value="{{ isPlanA }}" hint-placeholder-val="{{ false }}"><sc-if value="{{ isEveningDemo }}" hint-placeholder-val="{{ false }}">
+  <button class="demo-evening-notice" type="button" onClick="{{ openFeedback }}" aria-label="Rate your day and see what is on tomorrow">
+    <i class="ph-fill ph-moon-stars" aria-hidden="true"></i>
+    <span class="demo-evening-notice-copy"><span><b>Harbour &amp; Co.</b><span>now</span></span><strong>How was today?</strong><small>Rate your plans, then see what’s on tomorrow.</small></span>
+  </button>
+</sc-if></sc-if>
+<sc-if value="{{ isPlanB }}" hint-placeholder-val="{{ false }}"><sc-if value="{{ isEveningDemo }}" hint-placeholder-val="{{ false }}">
+  <button class="demo-evening-notice" type="button" onClick="{{ openFeedback }}" aria-label="Rate your day and see what is on tomorrow">
+    <i class="ph-fill ph-moon-stars" aria-hidden="true"></i>
+    <span class="demo-evening-notice-copy"><span><b>Harbour &amp; Co.</b><span>now</span></span><strong>How was today?</strong><small>Rate your plans, then see what’s on tomorrow.</small></span>
+  </button>
+</sc-if></sc-if>
+<sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:none;margin:0 16px 6px;padding:10px 14px;border-radius:14px;background:#10262D;color:#fff;font-size:13px;font-weight:500;display:flex;gap:8px;align-items:center"><i class="ph-fill ph-cloud-slash" style="font-size:18px;color:#FF6B35"></i>Offline. Your plan and every Plan B are saved on this phone.</div>
+</sc-if>
+
+<div style="flex:1;overflow-y:auto;padding:8px 20px 28px">
+
+<sc-if value="{{ isShape }}" hint-placeholder-val="{{ false }}">
+<div class="shape-page">
+  <header class="shape-heading">
+    <span class="shape-brand">Harbour &amp; Co. · powered by Séjour</span>
+    <span class="shape-kicker">A trip shaped around you</span>
+    <h1>Shape your trip before you book</h1>
+    <p>Start with the essentials. Your estimate adjusts as your plans take shape.</p>
+  </header>
+  <section class="shape-destination" aria-label="Toronto destination">
+    <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&amp;fit=crop&amp;w=900&amp;q=88" alt="Toronto skyline and CN Tower">
+    <div class="shape-destination-copy"><span>WHERE</span><b>Toronto</b><small>From London Heathrow</small></div>
+    <span class="shape-destination-pin" aria-hidden="true"><i class="ph ph-map-pin-area"></i></span>
+  </section>
+  <section class="shape-facts" aria-label="Trip details">
+    <div class="shape-fact">
+      <i class="ph ph-calendar-blank" aria-hidden="true"></i>
+      <div class="shape-fact-copy"><small>WHEN</small><b>2–12 October</b><span>10 nights away</span></div>
+    </div>
+    <div class="shape-fact">
+      <i class="ph ph-users" aria-hidden="true"></i>
+      <div class="shape-fact-copy"><small>WHO</small><b>{{ partyLabel }}</b><span>Travelers in this estimate</span></div>
+      <div class="shape-stepper">
+        <button onClick="{{ partyDown }}" aria-label="Fewer travelers"><i class="ph ph-minus"></i></button>
+        <button onClick="{{ partyUp }}" aria-label="More travelers"><i class="ph ph-plus"></i></button>
+      </div>
+    </div>
+  </section>
+  <section class="shape-estimate">
+    <div class="shape-estimate-head">
+      <div class="shape-estimate-title"><span class="shape-estimate-label">COSTED ESTIMATE</span><small>For {{ partyLabel }}</small></div>
+      <span class="shape-confidence-chip">70% confidence</span>
+    </div>
+    <div class="shape-price">{{ estTotal }}</div>
+    <p class="shape-estimate-note">Indicative trip total · fares seen in the last 48 hours</p>
+    <div class="shape-costs">
+      <div><i class="ph ph-airplane-tilt" aria-hidden="true"></i><span class="shape-cost-copy"><b>Flights</b><small>Return airfare</small></span><strong>{{ estFlights }}</strong></div>
+      <div><i class="ph ph-bed" aria-hidden="true"></i><span class="shape-cost-copy"><b>Stay</b><small>10 nights · hotel dependent</small></span><strong>{{ estStay }}</strong></div>
+      <div><i class="ph ph-fork-knife" aria-hidden="true"></i><span class="shape-cost-copy"><b>Food &amp; activities</b><small>Varies with your days</small></span><strong>{{ estAct }}</strong></div>
+    </div>
+    <div class="shape-confidence">
+      <div class="shape-confidence-bar"><span></span></div>
+      <span class="shape-confidence-label">Estimate confidence · recent fare observations</span>
+    </div>
+    <div class="shape-budget-cap"><span>Starting budget cap</span><b>{{ estCap }}</b></div>
+  </section>
+  <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+    <button class="shape-book" onClick="{{ sendLead }}">Send to Harbour &amp; Co. to book<i class="ph-bold ph-arrow-right"></i></button>
+  </sc-if>
+  <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+    <div class="shape-sent"><i class="ph-fill ph-check-circle"></i><div><b>Sent to Harbour &amp; Co.</b><p>An agent will hold these fares and book with you. Your budget cap carries into the trip.</p></div></div>
+  </sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+<div class="today-app">
+<div class="today-head"><div><span>Harbour &amp; Co. · powered by Séjour</span><b>TORONTO · DAY 03</b></div><strong>{{ todayStageLabel }}</strong></div>
+<sc-if value="{{ isBeforeFlight }}" hint-placeholder-val="{{ false }}">
+<section class="today-hero today-before"><img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&amp;fit=crop&amp;w=1000&amp;q=88" alt="Toronto skyline at dusk"><div class="today-clock"><span>TORONTO LOCAL TIME</span><b>{{ localTime }}</b><small>EDT · TORONTO</small></div><div class="today-hero-copy"><span>A LITTLE TIME TO LOOK AROUND</span><h2>Toronto,<br><em>before it begins.</em></h2><p>A few good places to make the city feel yours.</p></div></section>
+<section class="today-note"><span class="today-eyebrow">A NOTE ON THE NIGHT</span><small>LEAVE ROOM FOR A SLOWER START</small><h3>Let the city meet you at its own pace.</h3><p>Settle in, find something warm nearby, and leave tomorrow open for the places that catch your eye.</p><div class="today-wander"><span>A GOOD TIME TO WANDER</span><b>After 18:30 · when the city softens</b></div></section>
+<div class="today-light" role="group" aria-label="Toronto in the morning and evening"><div><img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&amp;fit=crop&amp;w=800&amp;q=88" alt="Toronto at sunrise"><b>DAWN · A softer start</b></div><div><img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&amp;fit=crop&amp;w=800&amp;q=88" alt="Toronto at dusk"><b>DUSK · When the city glows</b></div></div><section class="today-section"><span class="today-eyebrow">THE CITY, IN LITTLE MOMENTS</span><div class="today-section-head"><h3>Three ways into Toronto.</h3><span>01—03 · SWIPE →</span></div><div class="today-rail" role="region" aria-label="Toronto places; scroll horizontally" tabindex="0">
+<article class="today-place"><img src="https://images.unsplash.com/photo-1562797583-6fd33b33c332?auto=format&amp;fit=crop&amp;w=700&amp;q=84" alt="Art and architecture in Toronto"><button onClick="{{ toggleAgoFavorite }}" aria-label="{{ agoFavoriteLabel }}">{{ agoHeart }}</button><div><small>TORONTO · CULTURE</small><b>Art Gallery of Ontario</b><p>A calm indoor first stop, with room to linger.</p><span>Indoor · about 2 hours</span></div></article>
+<article class="today-place"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&amp;fit=crop&amp;w=700&amp;q=84" alt="Café in Toronto"><button onClick="{{ toggleMarketFavorite }}" aria-label="{{ marketFavoriteLabel }}">{{ marketHeart }}</button><div><small>KENSINGTON · NEIGHBOURHOOD</small><b>Kensington Market</b><p>Independent shops, easy bites, side streets.</p><span>Easygoing · 1–2 hours</span></div></article>
+<article class="today-place"><img src="https://images.unsplash.com/photo-1655946183749-3911e9366b88?auto=format&amp;fit=crop&amp;w=700&amp;q=84" alt="Toronto Islands and skyline"><button onClick="{{ toggleIslandsFavorite }}" aria-label="{{ islandsFavoriteLabel }}">{{ islandsHeart }}</button><div><small>TORONTO ISLANDS · WATERFRONT</small><b>Island ferry</b><p>Save for a clear day; see the skyline from the water.</p><span>Outdoor · half day</span></div></article>
+</div></section>
+<section class="today-close today-before-close"><img src="https://images.unsplash.com/photo-1671944489295-f5d87551c561?auto=format&amp;fit=crop&amp;w=420&amp;h=420&amp;q=90" alt="Red maple leaf in autumn"><span class="today-eyebrow">YOUR FIRST DAY, YOUR OWN PACE</span><h3>Let the night be yours.</h3><p>Pick up the day plan when you’re ready. There’s no need to do it all at once.</p><button onClick="{{ startFirstDay }}">Start your first day <i class="ph-bold ph-arrow-up-right"></i></button></section>
+</sc-if>
+<sc-if value="{{ isPlanA }}" hint-placeholder-val="{{ true }}">
+<section class="today-plan-hero"><img src="https://images.unsplash.com/photo-1655946183749-3911e9366b88?auto=format&amp;fit=crop&amp;w=980&amp;q=86" alt="Toronto Islands and skyline"><div><span>FRIDAY 3 OCTOBER · ORIGINAL DAY</span><h2>Today, at your pace.</h2></div><b class="today-temp">❄ &nbsp;−1°C</b></section>
+<section class="today-weather"><div><b>⚠ WEATHER WATCH</b><span>UPDATED 05:40</span></div><h3>Snow from 06:00 · 4–7 cm by afternoon</h3><p>Northwest wind · 14 km/h. The 14:00 ferry is outdoors; your morning remains indoors.</p><button onClick="{{ openWhySnow }}">ⓘ &nbsp; Why this?</button></section>
+<section class="today-section today-agenda"><div class="today-section-head"><h3>Today’s plan</h3><span>PLAN A · ORIGINAL</span></div><article><time>09:00</time><div><b>Co-working, King St W</b><p>Until 12:30 · 8 min walk from your hotel</p><small>⚑ &nbsp; Anchor · stays</small><sc-if value="{{ isEveningDemo }}" hint-placeholder-val="{{ false }}"><small style="display:inline-block;margin:4px 0 0;padding:4px 7px;border-radius:99px;background:#E2F2E8;color:#1E6B43;font-size:7px">✓ &nbsp; Done</small></sc-if></div></article><article><time>14:00</time><div><b>Toronto Island ferry and Centre Island walk</b><p>Outdoor · 2h 30m</p><small class="today-warn">⚠ &nbsp; Snow risk</small><sc-if value="{{ isEveningDemo }}" hint-placeholder-val="{{ false }}"><small style="display:inline-block;margin:4px 0 0;padding:4px 7px;border-radius:99px;background:#E2F2E8;color:#1E6B43;font-size:7px">✓ &nbsp; Done</small></sc-if></div></article><article><time>19:30</time><div><b>Dinner, Ossington Ave</b><p>Booked · table for one</p><small>✓ &nbsp; Stays</small><sc-if value="{{ isEveningDemo }}" hint-placeholder-val="{{ false }}"><small style="display:inline-block;margin:4px 0 0;padding:4px 7px;border-radius:99px;background:#E2F2E8;color:#1E6B43;font-size:7px">✓ &nbsp; Done</small></sc-if></div></article></section>
+<section class="today-rate"><div><span class="today-eyebrow">A SMALL CHECK-IN</span><h3>How was today?</h3><p>Your note helps shape what we suggest next.</p></div><button onClick="{{ openFeedback }}">★ &nbsp; Rate today</button></section><section class="today-upnext"><span class="today-eyebrow">LOOKING A LITTLE AHEAD</span><h3>Room for one more city moment?</h3><div><img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&amp;fit=crop&amp;w=250&amp;q=80" alt=""><p><small>SATURDAY · 19:00</small><b>Nuit Blanche</b><span>Free art across downtown · 90% confidence</span></p></div></section>
+</sc-if>
+<sc-if value="{{ isPlanB }}" hint-placeholder-val="{{ false }}">
+<section class="today-plan-hero today-plan-b"><img src="https://images.unsplash.com/photo-1562797583-6fd33b33c332?auto=format&amp;fit=crop&amp;w=980&amp;q=86" alt="Art Gallery of Ontario"><div><span>FRIDAY 3 OCTOBER · WEATHER-AWARE</span><h2>A thoughtful change of plan.</h2></div><b class="today-temp">❄ &nbsp;−1°C</b></section>
+<section class="today-weather"><div><b>⚠ WEATHER WATCH</b><span>UPDATED 05:40</span></div><h3>Snow from 06:00 · 4–7 cm by afternoon</h3><p>The island ferry is outdoors. Plan B keeps your fixed points and swaps in a nearby indoor stop.</p><button onClick="{{ openWhySnow }}">ⓘ &nbsp; Why this?</button></section>
+<section class="today-swap"><div class="today-section-head"><div><span class="today-eyebrow">PROPOSED CHANGE</span><h3>One change. Two plans stay put.</h3></div><span>1 SWAP</span></div><p>⚑ &nbsp; <b>Stays</b> · Co-working, 09:00–12:30</p><div class="today-swap-change"><div><del>14:00 · Toronto Island ferry</del><b>↳ &nbsp;14:00 · Art Gallery of Ontario</b><small>Indoor · 18 min walk · $30</small></div><img src="https://images.unsplash.com/photo-1562797583-6fd33b33c332?auto=format&amp;fit=crop&amp;w=240&amp;q=80" alt="Gallery interior"></div><p>⚑ &nbsp; <b>Stays</b> · Dinner, Ossington, 19:30</p>
+<sc-if value="{{ showPlanBApproval }}" hint-placeholder-val="{{ false }}"><div class="today-confirm">✓ &nbsp; Plan B is live · change anytime today</div></sc-if><sc-if value="{{ showPlanAKept }}" hint-placeholder-val="{{ false }}"><div class="today-confirm">✓ &nbsp; Plan A kept · Plan B stays saved</div></sc-if><button class="today-approve" onClick="{{ approve }}">{{ planBActionLabel }}</button><button class="today-keep" onClick="{{ keepA }}">{{ keepAActionLabel }}</button></section>
+<section class="today-section today-agenda"><div class="today-section-head"><h3>Plan B · your day</h3><span>WEATHER-AWARE</span></div><article><time>09:00</time><div><b>Co-working, King St W</b><p>Anchor · stays</p><sc-if value="{{ isEveningDemo }}" hint-placeholder-val="{{ false }}"><small style="display:inline-block;margin:4px 0 0;padding:4px 7px;border-radius:99px;background:#E2F2E8;color:#1E6B43;font-size:7px">✓ &nbsp; Done</small></sc-if></div></article><article><time>14:00</time><div><b>Art Gallery of Ontario</b><p>Indoor · replaces the ferry</p><sc-if value="{{ isEveningDemo }}" hint-placeholder-val="{{ false }}"><small style="display:inline-block;margin:4px 0 0;padding:4px 7px;border-radius:99px;background:#E2F2E8;color:#1E6B43;font-size:7px">✓ &nbsp; Done</small></sc-if></div></article><article><time>19:30</time><div><b>Dinner, Ossington Ave</b><p>Booked · stays</p><sc-if value="{{ isEveningDemo }}" hint-placeholder-val="{{ false }}"><small style="display:inline-block;margin:4px 0 0;padding:4px 7px;border-radius:99px;background:#E2F2E8;color:#1E6B43;font-size:7px">✓ &nbsp; Done</small></sc-if></div></article></section><section class="today-rate"><div><span class="today-eyebrow">AFTER YOUR DAY</span><h3>How was today?</h3><p>Rate the plans you tried. It takes about 20 seconds.</p></div><button onClick="{{ openFeedback }}">★ &nbsp; Rate today</button></section>
+</sc-if>
+<sc-if value="{{ isAfterTrip }}" hint-placeholder-val="{{ false }}">
+<section class="today-hero today-after"><img src="https://images.unsplash.com/photo-1682750430965-e4efa5f09ac3?auto=format&amp;fit=crop&amp;w=1000&amp;q=88" alt="Toronto streetcar under evening city lights"><div class="today-hero-copy"><span>TORONTO · OCTOBER 03</span><h2>Toronto,<br><em>you stay with me.</em></h2><p>Some places stay after you leave.</p></div></section>
+<section class="today-section"><span class="today-eyebrow">POSTCARDS FROM TORONTO</span><div class="today-section-head"><h3>A few moments to keep.</h3><span>03 FRAMES</span></div><div class="today-rail today-memories" role="region" aria-label="Toronto photographs; scroll horizontally" tabindex="0"><article><img src="https://loveincstatic.blob.core.windows.net/loveexploring/IMAGES/cultural-highlights-of-toronto/distillery-district.jpg" alt="Brick lanes in Toronto’s Distillery District"><b>Distillery District</b></article><article><img src="https://assets.simpleviewinc.com/simpleview/image/upload/c_fill%2Cf_jpg%2Ch_404%2Cq_100%2Cw_640/v1/clients/toronto/temp_7ccb30a5-9b57-4e2e-b1f5-85973634612d.jpg" alt="Kensington Market storefronts"><b>Kensington Market</b></article><article><img src="https://assets.simpleviewinc.com/simpleview/image/upload/c_limit%2Ch_1200%2Cq_75%2Cw_1200/v1/clients/toronto/16903E_1_08da1dbb-38ca-4ef2-8a40-4490c3ac4c52.jpg" alt="King Street West after dark"><b>King Street after dark</b></article></div></section>
+<section class="today-close today-after-close"><span class="today-eyebrow">UNTIL NEXT TIME</span><p>Thank you for the little moments.</p><h3>Take Toronto with you.</h3><small>Trip complete · The next story is still yours to write.</small></section>
+</sc-if>
+</div></sc-if>
+<sc-if value="{{ isBudget }}" hint-placeholder-val="{{ false }}">
+<div class="budget-page">
+  <header class="budget-head">
+    <div class="budget-head-copy"><span class="budget-eyebrow">TORONTO · DAY 4</span><h1>Budget</h1><p>Know where your trip stands.</p></div>
+    <div class="budget-cap"><span>TRIP CAP</span><b>{{ capFmt }}</b><small>4 OF 10 DAYS</small></div>
+  </header>
+  <div class="budget-progress-label"><span>Trip progress</span><b>40%</b></div>
+  <div class="budget-progress" role="progressbar" aria-label="Trip progress" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+  <section class="budget-overview" aria-label="Trip budget tracker">
+    <div class="budget-overview-head"><div><span>TRIP BUDGET TRACKER</span><b>Spent and forecast</b></div><span class="budget-status" style="background:{{ status.bg }};color:{{ status.color }}"><i class="{{ status.icon }}"></i>{{ status.label }}</span></div>
+    <div class="budget-chart-layout">
+      <div class="budget-chart-well">
+        <svg class="budget-pie3d" viewBox="0 0 200 120" role="img" aria-label="Solid 3D pie chart: {{ spentFmt }} spent; {{ remainingFmt }} remains in the trip cap">
+          <ellipse cx="100" cy="67" rx="76" ry="42" fill="#105F6F"></ellipse>
+          <path d="{{ pieSpentSide }}" class="spent-side"></path><path d="{{ pieAvailableSide }}" class="available-side"></path>
+          <path d="{{ pieSplitWall }}" class="split-wall"></path>
+          <path d="{{ pieSpentTop }}" class="spent-face pie-top"></path><path d="{{ pieAvailableTop }}" class="available-face pie-top"></path>
+        </svg>
+      </div>
+      <div class="budget-forecast">
+        <small>PROJECTED TOTAL</small><b class="budget-forecast-total">{{ projFmt }}</b>
+        <span class="budget-delta {{ budgetDeltaClass }}">{{ projDelta }}</span>
+        <p>{{ projText }}</p><span class="budget-cap-note">By the flight home · cap {{ capFmt }}</span>
+      </div>
+    </div>
+    <div class="budget-legend" aria-label="Chart key"><span><i class="spent-dot"></i>Spent · {{ spentFmt }}</span><span><i class="available-dot"></i>Available · {{ remainingFmt }}</span></div>
+  </section>
+  <section class="budget-swaps" aria-label="Ways to save">
+    <div class="budget-swaps-head"><div><b>Small swaps, more room</b><small>{{ swapSummary }}</small></div><span class="budget-savings">{{ savingsLabel }}</span></div>
+    <sc-for list="{{ swaps }}" as="sw" hint-placeholder-count="3">
+      <button class="budget-swap-card {{ sw.selectedClass }}" aria-pressed="{{ sw.selected }}" onClick="{{ sw.onClick }}">
+        <span class="budget-swap-icon"><i class="{{ sw.icon }}"></i></span>
+        <span class="budget-swap-copy"><b>{{ sw.title }}</b><small>{{ sw.meta }}</small></span>
+        <span class="budget-swap-action">−{{ sw.saveFmt }}<small>{{ sw.actionLabel }}</small></span>
+      </button>
+    </sc-for>
+  </section>
+  <aside class="budget-event">
+    <span class="budget-event-label"><i class="ph-fill ph-ticket"></i>Event ahead · 6–8 Oct</span>
+    <b>Tech summit downtown</b>
+    <p>Nearby hotels and rides may cost about 18% more. The forecast already includes the extra $64.</p>
+    <small>EVENT SIGNAL · 72% CONFIDENCE · Full event details are on Today.</small>
+  </aside>
+</div>
+</sc-if>
+
+<sc-if value="{{ isNearby }}" hint-placeholder-val="{{ false }}">
+<div class="nearby-page">
+  <header class="nearby-head">
+    <span class="budget-eyebrow">TORONTO · KING WEST</span>
+    <h1>Nearby</h1>
+    <p>A few useful places around your hotel.</p>
+  </header>
+  <div class="nearby-map" role="group" aria-label="Illustrative map of nearby places around King West, Toronto" style="background:{{ map.bg }};--map-street:{{ map.street }};--map-lake:{{ map.lake }};--map-label:{{ map.label }}">
+    <div class="nearby-map-grid"></div>
+    <div class="nearby-map-lake"></div>
+    <span class="nearby-map-badge">TORONTO · KING WEST</span>
+    <svg class="nearby-map-svg" viewBox="0 0 350 204" aria-hidden="true">
+      <text class="nearby-road-label" x="8" y="47">QUEEN ST W</text>
+      <text class="nearby-road-label" x="8" y="88">KING ST W</text>
+      <text class="nearby-road-label" x="8" y="129">FRONT ST W</text>
+      <text class="nearby-road-label" x="62" y="22" transform="rotate(90 62 22)">SPADINA AVE</text>
+      <text class="nearby-road-label" x="169" y="21" transform="rotate(90 169 21)">UNIVERSITY AVE</text>
+      <polyline class="nearby-route-alt" points="{{ routeAltPoints }}"></polyline>
+      <polyline class="nearby-route-main" points="{{ routeMainPoints }}"></polyline>
+    </svg>
+    <div class="nearby-map-dinner"><i class="ph-fill ph-fork-knife"></i><span class="nearby-map-dinner-label">DINNER</span></div>
+    <sc-for list="{{ pins }}" as="p" hint-placeholder-count="0">
+      <button class="nearby-map-pin {{ p.selectedClass }}" onClick="{{ p.onClick }}" aria-label="{{ p.label }} · {{ p.walkLabel }} walk" aria-pressed="{{ p.selected }}" style="left:{{ p.x }}px;top:{{ p.y }}px"><i class="{{ p.icon }}"></i><span class="nearby-map-place-label">{{ p.shortLabel }}</span></button>
+    </sc-for>
+    <div class="nearby-map-hotel"><i class="ph-fill ph-bed"></i><span class="nearby-map-hotel-label">YOUR HOTEL</span></div>
+    <span class="nearby-map-callout">{{ mapCaption }}</span>
+  </div>
+
+  <sc-if value="{{ hasSelectedPlace }}" hint-placeholder-val="{{ false }}">
+    <section class="nearby-selected" aria-live="polite" aria-label="Selected place details">
+      <div class="nearby-selected-top">
+        <span class="nearby-selected-icon"><i class="{{ selectedPlace.icon }}"></i></span>
+        <div class="nearby-selected-copy"><b>{{ selectedPlace.name }}</b><span>{{ selectedPlace.address }}</span><sc-if value="{{ selectedPlace.hasMeta }}" hint-placeholder-val="{{ false }}"><small>{{ selectedPlace.meta }}</small></sc-if></div>
+      </div>
+      <div class="nearby-selected-meta"><strong>{{ selectedPlace.walkLabel }}</strong><span>·</span><span>{{ selectedPlace.dist }}</span><span>·</span><span>{{ selectedPlace.hours }}</span>
+        <button class="nearby-route-action" onClick="{{ selectedRouteAction }}">{{ selectedRouteLabel }}</button>
+      </div>
+    </section>
+  </sc-if>
+
+  <section class="nearby-route-card" aria-label="Walking route preference">
+    <span class="nearby-route-icon"><i class="ph ph-moon-stars"></i></span>
+    <div class="nearby-route-copy"><b>{{ routeTitle }}</b><span>{{ routeSummary }}</span><button onClick="{{ openWhyWalk }}"><i class="ph ph-info"></i> Why this route?</button></div>
+    <button class="nearby-switch" onClick="{{ toggleNight }}" aria-label="{{ routeToggleLabel }}" aria-pressed="{{ night }}"><span></span></button>
+  </section>
+
+  <aside class="nearby-emergency"><i class="ph ph-first-aid"></i><span><strong>Need urgent help?</strong> Call 911 in Canada. Séjour helps you plan; it is not a security service.</span></aside>
+
+  <section class="nearby-essentials">
+    <div class="nearby-section-head"><b>Essentials</b><span>{{ placeCount }} places · nearest first</span></div>
+    <div class="nearby-filters" aria-label="Filter nearby places">
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="5">
+        <button class="nearby-filter {{ c.activeClass }} {{ c.lockedClass }}" onClick="{{ c.onClick }}" aria-pressed="{{ c.selected }}" aria-haspopup="{{ c.hasDialog }}"><i class="{{ c.icon }}"></i>{{ c.label }}</button>
+      </sc-for>
+    </div>
+    <sc-if value="{{ hasPlaces }}" hint-placeholder-val="{{ true }}">
+      <div class="nearby-place-list" role="group" aria-label="Nearby places">
+        <sc-for list="{{ places }}" as="pl" hint-placeholder-count="4">
+          <button class="nearby-place-row {{ pl.selectedClass }}" onClick="{{ pl.onClick }}" aria-pressed="{{ pl.selected }}" aria-label="{{ pl.name }}, {{ pl.walkLabel }} walk, {{ pl.dist }} away">
+            <span class="nearby-place-icon"><i class="{{ pl.icon }}"></i></span>
+            <span class="nearby-place-copy"><b>{{ pl.name }}</b><small>{{ pl.address }} · {{ pl.hours }}</small></span>
+            <span class="nearby-place-walk">{{ pl.walkLabel }}<small>{{ pl.dist }}</small></span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ noPlaces }}" hint-placeholder-val="{{ false }}">
+      <div class="nearby-empty">No essentials are selected. Turn on a category to see places nearby.<button onClick="{{ resetNearbyFilters }}">Show all essentials</button></div>
+    </sc-if>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTrip }}" hint-placeholder-val="{{ false }}">
+<div class="trip-page">
+  <header class="trip-head">
+    <span class="budget-eyebrow">TORONTO · BOOKING HC-48213</span>
+    <h1>Trip</h1>
+    <p>Your flights, claim details and offline plan in one place.</p>
+  </header>
+
+  <section class="trip-itinerary" aria-label="Trip flight timeline">
+    <div class="trip-itinerary-label">YOUR JOURNEY · 2 FLIGHTS</div>
+    <article class="trip-leg">
+      <span class="trip-leg-marker"><i class="ph ph-airplane-takeoff"></i></span>
+      <div class="trip-leg-content">
+        <div class="trip-leg-top"><span class="trip-leg-label">OUTBOUND · THU 2 OCT</span><span class="trip-leg-status"><i class="ph-fill ph-clock-countdown"></i>Arrived 4h 12m late</span></div>
+        <div class="trip-leg-route"><strong>LHR</strong><span class="trip-leg-line"><i class="ph-fill ph-airplane"></i></span><strong>YYZ</strong></div>
+        <div class="trip-leg-meta">XX123 · landed 16:52 · scheduled 12:40</div>
+      </div>
+    </article>
+    <article class="trip-leg">
+      <span class="trip-leg-marker"><i class="ph ph-airplane-landing"></i></span>
+      <div class="trip-leg-content">
+        <div class="trip-leg-top"><span class="trip-leg-label">RETURN · SUN 12 OCT</span><span class="trip-leg-status ontime"><i class="ph-fill ph-check-circle"></i>On time</span></div>
+        <div class="trip-leg-route"><strong>YYZ</strong><span class="trip-leg-line"><i class="ph-fill ph-airplane"></i></span><strong>LHR</strong></div>
+        <div class="trip-leg-meta">XX124 · departs 18:30</div>
+      </div>
+    </article>
+  </section>
+
+  <section class="trip-claim" aria-label="Potential flight compensation estimate">
+    <div class="trip-claim-top"><span class="trip-claim-label"><i class="ph-fill ph-scales"></i>Compensation assist</span><span class="trip-claim-estimate">POTENTIAL ESTIMATE</span></div>
+    <div class="trip-claim-headline"><b>Your 2 Oct delay may qualify</b><strong class="trip-claim-amount">£520</strong></div>
+    <div class="trip-evidence" aria-label="Estimate details">
+      <div class="trip-evidence-item"><b>4h 12m</b><small>arrival delay</small></div>
+      <div class="trip-evidence-item"><b>5,705 km</b><small>flight distance</small></div>
+      <div class="trip-evidence-item"><b>Not given</b><small>airline reason</small></div>
+    </div>
+    <p class="trip-claim-copy">Based on the delay and flight distance. The airline’s reason hasn’t been supplied, so this estimate doesn’t confirm eligibility.</p>
+    <div class="trip-steps" aria-label="Claim steps"><span><b>1</b>Review</span><i class="ph ph-arrow-right"></i><span><b>2</b>Download</span><i class="ph ph-arrow-right"></i><span><b>3</b>Send yourself</span></div>
+    <button class="trip-claim-button" onClick="{{ openPacket }}">Review claim packet <i class="ph ph-arrow-up-right"></i></button>
+    <p class="trip-claim-note">You review and send it to the airline. Nothing is submitted automatically.</p>
+  </section>
+
+  <section class="trip-offline" aria-label="Offline plan coverage">
+    <div class="trip-offline-head">
+      <span class="trip-offline-icon"><i class="ph ph-cloud-arrow-down"></i></span>
+      <div class="trip-offline-copy"><b>Offline Plan B</b><small>Last synced 07:12 today</small></div>
+      <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}"><span class="trip-offline-state demo">DEMO · NO SIGNAL</span></sc-if>
+      <sc-if value="{{ online }}" hint-placeholder-val="{{ true }}"><span class="trip-offline-state">READY OFFLINE</span></sc-if>
+      <button class="trip-offline-toggle" onClick="{{ toggleOffline }}" aria-label="Test no signal mode" aria-pressed="{{ offline }}"><span></span></button>
+    </div>
+    <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}"><p class="trip-offline-demo-note">Signal loss is simulated; saved items stay available in this demo.</p></sc-if>
+    <div class="trip-offline-coverage">
+      <span><i class="ph ph-calendar-check"></i>Days 3–10 · Plan B</span>
+      <span><i class="ph ph-translate"></i>Hotel · EN / FR</span>
+      <span><i class="ph ph-map-pin"></i>Nearby essentials</span>
+      <span><i class="ph ph-first-aid"></i>Emergency numbers</span>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ showReflowBar }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:none;padding:12px 16px;display:flex;gap:10px;align-items:center;background:#fff;border-top:1px solid #E4DFD6">
+    <div style="display:flex;flex-direction:column;flex:1"><span style="font-weight:700;font-size:15px">1 swap, 2 stay put</span><span style="font-size:13px;color:#55686E">Undo any time today</span></div>
+    <button onClick="{{ keepA }}" style="height:48px;padding:0 14px;border-radius:999px;border:none;background:transparent;color:#004E64;font-weight:700;cursor:pointer" style-hover="background:#E3EEF0">Keep A</button>
+    <button onClick="{{ approve }}" style="height:48px;padding:0 20px;border-radius:999px;border:none;background:#004E64;color:#fff;font-weight:700;font-size:16px;cursor:pointer" style-hover="background:#00647F" style-active="background:#00303D">Approve</button>
+  </div>
+</sc-if>
+
+<sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:none;margin:0 12px 8px;padding:12px 14px;border-radius:18px;background:#10262D;color:#fff;display:flex;gap:10px;align-items:center">
+    <i class="ph-fill ph-check-circle" style="font-size:22px;color:#6FD19E"></i>
+    <span style="flex:1;font-size:14px;line-height:1.35">Plan B is live. Harbour &amp; Co. can see the change.</span>
+    <button onClick="{{ undo }}" style="height:40px;padding:0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-weight:700;cursor:pointer" style-hover="background:rgba(255,255,255,.1)">Undo</button>
+  </div>
+</sc-if>
+
+<div style="flex:none;display:grid;grid-template-columns:repeat(5,1fr);padding:6px 8px 24px;background:#fff;border-top:1px solid #EAE5DC">
+  <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+    <button onClick="{{ t.onClick }}" style="height:56px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:{{ t.color }};font-size:12px;font-weight:{{ t.weight }}"><i class="{{ t.icon }}" style="font-size:24px"></i>{{ t.label }}</button>
+  </sc-for>
+</div>
+
+<sc-if value="{{ hasSheet }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;background:rgba(16,38,45,.45);display:flex;flex-direction:column;justify-content:flex-end">
+  <div onClick="{{ closeSheet }}" style="flex:1"></div>
+  <div style="background:#FAF7F2;border-radius:30px 30px 0 0;padding:12px 22px 34px;display:flex;flex-direction:column;gap:16px;max-height:86%;overflow-y:auto">
+    <div style="align-self:center;width:40px;height:5px;border-radius:999px;background:#D9D3C8"></div>
+<sc-if value="{{ sheetRating }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:12px"><h2 style="margin:0;font-family:'Plus Jakarta Sans';font-size:22px;font-weight:800">How did you like today?</h2><div style="font-size:13px;color:#55686E">Friday 3 October · Rate the plans you tried.</div><sc-for list="{{ ratingRows }}" as="row" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:5px;padding:8px 0;border-top:1px solid #E4DFD6"><b style="font-size:13px">{{ row.label }}</b><div style="display:flex;gap:6px"><sc-for list="{{ row.stars }}" as="star" hint-placeholder-count="5"><button onClick="{{ star.onClick }}" aria-label="Rate {{ row.label }} {{ star.value }} out of 5" style="width:34px;height:34px;border:1px solid #E4DFD6;border-radius:9px;background:#fff;color:{{ star.color }};font-size:21px;cursor:pointer">{{ star.symbol }}</button></sc-for></div></div></sc-for><textarea rows="3" placeholder="Anything we should know for future plans? (Optional)" style="width:100%;resize:vertical;padding:12px;border:1px solid #D9D3C8;border-radius:12px;background:#fff;font:14px/1.4 Satoshi,system-ui,sans-serif"></textarea><sc-if value="{{ feedbackNotSent }}" hint-placeholder-val="{{ true }}"><button onClick="{{ sendFeedback }}" style="height:48px;border:0;border-radius:999px;background:#00596E;color:#fff;font-weight:700;cursor:pointer">Send feedback</button></sc-if><sc-if value="{{ feedbackSent }}" hint-placeholder-val="{{ false }}"><div style="padding:12px;border-radius:12px;background:#E2F2E8;color:#1E6B43;font-weight:700">Thank you. Your feedback is saved for this demo.</div><button onClick="{{ closeSheet }}" style="height:44px;border:0;border-radius:999px;background:#00596E;color:#fff;font-weight:700;cursor:pointer">Done</button></sc-if></div></sc-if>
+
+    <sc-if value="{{ sheetWhySnow }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans';font-size:22px;font-weight:800">Why this change?</h2>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px"><i class="ph ph-cloud-snow" style="font-size:22px;color:#004E64;flex:none"></i><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700">4–7 cm of snow from 06:00</span><span style="font-size:14px;color:#55686E">Two forecast sources agree · 80% confidence · seen 05:40, expires 18:00</span></div></div>
+        <div style="display:flex;gap:12px"><i class="ph ph-boat" style="font-size:22px;color:#004E64;flex:none"></i><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700">The ferry is 2h 30m outdoors</span><span style="font-size:14px;color:#55686E">Harbour &amp; Co.’s rule: offer an indoor swap when snow severity passes 0.5. Today it’s 0.6.</span></div></div>
+        <div style="display:flex;gap:12px"><i class="ph ph-push-pin" style="font-size:22px;color:#004E64;flex:none"></i><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700">Your fixed points stay put</span><span style="font-size:14px;color:#55686E">The co-working morning and dinner don’t move. The gallery is 18 min on foot from your anchor.</span></div></div>
+      </div>
+      <div style="font-size:13px;color:#55686E;line-height:1.5">Séjour suggests the swap and fixed rules check it. Nothing changes until you approve.</div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ sheetWhyWalk }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans';font-size:22px;font-weight:800">Why this route?</h2>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px"><i class="ph ph-lamp" style="font-size:22px;color:#004E64;flex:none"></i><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700">86% of the route is marked as lit</span><span style="font-size:14px;color:#55686E">OpenStreetMap lighting tags · medium confidence, coverage varies · checked 3 weeks ago</span></div></div>
+        <div style="display:flex;gap:12px"><i class="ph ph-tram" style="font-size:22px;color:#004E64;flex:none"></i><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700">Night streetcar runs along King</span><span style="font-size:14px;color:#55686E">Every 30 min after 01:30, so there’s a way back if you’d rather not walk</span></div></div>
+        <div style="display:flex;gap:12px"><i class="ph ph-chat-circle-text" style="font-size:22px;color:#004E64;flex:none"></i><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700">No traveler reports in 30 days</span><span style="font-size:14px;color:#55686E">On this route and within one block of it</span></div></div>
+      </div>
+      <div style="font-size:13px;color:#55686E;line-height:1.5">We show the evidence, not a safety score. Séjour is a planning aid, not a security service. Emergency: 911.</div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ sheetConsent }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans';font-size:22px;font-weight:800">Show a place of worship?</h2>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.4">
+        <div style="display:flex;gap:10px"><i class="ph ph-toggle-left" style="font-size:20px;color:#004E64;flex:none"></i>Off unless you turn it on. Kept apart from your profile, and you can delete it on its own.</div>
+        <div style="display:flex;gap:10px"><i class="ph ph-robot" style="font-size:20px;color:#004E64;flex:none"></i>Never sent to an AI model. We look it up straight from map data.</div>
+        <div style="display:flex;gap:10px"><i class="ph ph-eye-slash" style="font-size:20px;color:#004E64;flex:none"></i>Harbour &amp; Co. staff can’t see it unless you allow it below.</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ traditions }}" as="tr" hint-placeholder-count="4">
+          <button onClick="{{ tr.onClick }}" style="height:40px;padding:0 14px;border-radius:999px;border:1.5px solid {{ tr.border }};background:{{ tr.bg }};color:{{ tr.color }};font-weight:700;font-size:14px;cursor:pointer">{{ tr.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:14px;align-items:center">
+        <span style="flex:1;font-size:15px">Let my agent see this</span>
+        <button onClick="{{ toggleAgentVis }}" aria-label="Agent visibility" style="width:52px;height:32px;border-radius:999px;border:none;background:{{ visTrack }};position:relative;cursor:pointer;flex:none"><span style="position:absolute;top:4px;left:{{ visKnob }};width:24px;height:24px;border-radius:50%;background:#fff;transition:left .2s"></span></button>
+      </div>
+      <div style="display:flex;gap:8px">
+        <sc-if value="{{ worshipOn }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ worshipOff }}" style="flex:1;height:52px;border-radius:999px;border:1.5px solid #B42336;background:transparent;color:#B42336;font-weight:700;cursor:pointer">Turn off and delete</button>
+        </sc-if>
+        <sc-if value="{{ worshipOffNow }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ closeSheet }}" style="flex:1;height:52px;border-radius:999px;border:none;background:transparent;color:#004E64;font-weight:700;cursor:pointer">Not now</button>
+        </sc-if>
+        <button onClick="{{ worshipSave }}" style="flex:1;height:52px;border-radius:999px;border:none;background:#004E64;color:#fff;font-weight:700;font-size:16px;cursor:pointer" style-hover="background:#00647F">{{ worshipCta }}</button>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ sheetPacket }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans';font-size:22px;font-weight:800">Claim packet · UK261</h2>
+      <div style="display:flex;flex-direction:column;font-size:15px">
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #EAE5DC"><span style="color:#55686E">Passenger</span><span style="font-weight:700">Amara Okafor</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #EAE5DC"><span style="color:#55686E">Flight</span><span style="font-weight:700">XX123 · 2 Oct · LHR → YYZ</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #EAE5DC"><span style="color:#55686E">Due / landed</span><span style="font-weight:700">12:40 / 16:52</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #EAE5DC"><span style="color:#55686E">Distance</span><span style="font-weight:700">5,705 km</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #EAE5DC"><span style="color:#55686E">Airline’s reason</span><span style="font-weight:700;color:#8A6A00">Not given, add if known</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0"><span style="color:#55686E">Amount</span><span style="font-weight:700">£520</span></div>
+      </div>
+      <div style="font-size:13px;color:#55686E;line-height:1.5">This is information, not legal advice. Séjour doesn’t file claims or act for you. You send this to the airline yourself.</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button onClick="{{ closeSheet }}" style="height:52px;border-radius:999px;border:none;background:#004E64;color:#fff;font-weight:700;font-size:16px;cursor:pointer;display:flex;gap:8px;align-items:center;justify-content:center" style-hover="background:#00647F"><i class="ph ph-download-simple" style="font-size:19px"></i>Download packet</button>
+        <button onClick="{{ closeSheet }}" style="height:46px;border-radius:999px;border:none;background:transparent;color:#004E64;font-weight:700;cursor:pointer;display:flex;gap:8px;align-items:center;justify-content:center" style-hover="background:#E3EEF0">Open the airline’s claim form<i class="ph ph-arrow-square-out" style="font-size:17px"></i></button>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+</div>
+</sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;card&quot;,&quot;timeline&quot;],&quot;default&quot;:&quot;card&quot;,&quot;tsType&quot;:&quot;'card' | 'timeline'&quot;},&quot;startTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;shape&quot;,&quot;today&quot;,&quot;budget&quot;,&quot;nearby&quot;,&quot;trip&quot;],&quot;default&quot;:&quot;today&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;todayStage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;before-flight&quot;,&quot;after-trip&quot;,&quot;plan-a&quot;,&quot;plan-b&quot;],&quot;default&quot;:&quot;plan-a&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;demoTime&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;morning&quot;,&quot;evening&quot;],&quot;default&quot;:&quot;morning&quot;,&quot;tsType&quot;:&quot;'morning' | 'evening'&quot;}}">
+class Component extends DCLogic {
+  state = { tab: this.props.startTab || 'today', todayStage: this.props.todayStage || 'plan-a', pivot: 'proposed', sheet: null, offline: false, night: true, party: 1, sent: false, swaps: [], cats: ['hospital','pharmacy','embassy','atm'], worship: false, tradition: 'Anglican', agentVis: false, draftTrad: 'Anglican', savedPlaces: [], feedbackStars: {}, feedbackSent: false, selectedPlace: null, routeToPlace: null };
+  renderVals() {
+    const s = this.state, v = this.props.variant || 'card', T = '#004E64';
+    const device = this.props.device === 'samsung' ? 'samsung' : 'iphone';
+    const isEveningDemo = this.props.demoTime === 'evening';
+    const todayStage = s.todayStage || this.props.todayStage || 'plan-a';
+    const localTime = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date());
+    const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+    const tabs = [['shape','Shape','ph-compass'],['today','Today','ph-sun-horizon'],['budget','Budget','ph-chart-donut'],['nearby','Nearby','ph-map-pin'],['trip','Trip','ph-airplane-tilt']].map(([id,label,icon]) => {
+      const on = s.tab === id;
+      return { label, icon: (on ? 'ph-fill ' : 'ph ') + icon, color: on ? T : '#6B7B80', weight: on ? 700 : 500, onClick: () => this.setState({ tab: id, sheet: null }) };
+    });
+    // Today
+    const approved = s.pivot === 'approved', proposed = s.pivot === 'proposed', kept = s.pivot === 'kept';
+    const savedPlaces = s.savedPlaces || [];
+    const ratingRows = [{ label: 'Co-working, King St W', key: 'coworking' }, { label: 'Toronto Island ferry', key: 'ferry' }, { label: 'Dinner, Ossington Ave', key: 'dinner' }].map(row => ({ label: row.label, stars: [1,2,3,4,5].map(value => ({ value, symbol: value <= (s.feedbackStars[row.key] || 0) ? '★' : '☆', color: value <= (s.feedbackStars[row.key] || 0) ? '#F06A3D' : '#9A948A', onClick: () => this.setState(st => ({ feedbackStars: { ...st.feedbackStars, [row.key]: value } })) })) }));
+    const base = { titleDecor: 'none', titleColor: '#10262D', rowBg: 'transparent', rowBorder: 'transparent', hasTag: false, tag: '', tagBg: '', tagColor: '', tagIcon: '' };
+    const tag = (tag, tagBg, tagColor, tagIcon) => ({ hasTag: true, tag, tagBg, tagColor, tagIcon });
+    const anchor = { ...base, time: '09:00', title: 'Co-working, King St W', meta: 'Until 12:30 · 8 min walk from your hotel', ...tag('Anchor', '#E3EEF0', T, 'ph-fill ph-push-pin') };
+    const ferry = { ...base, time: '14:00', title: 'Toronto Island ferry and Centre Island walk', meta: 'Outdoor · 2h 30m' };
+    const ago = { ...base, time: '14:00', title: 'Art Gallery of Ontario', meta: 'Indoor · 18 min walk from your anchor · $30' };
+    const dinner = { ...base, time: '19:30', title: 'Dinner, Ossington Ave', meta: 'Booked · table for one' };
+    let planItems;
+    if (approved) planItems = [anchor, { ...ago, rowBg: '#fff', rowBorder: '#E4DFD6', ...tag('Plan B · live', '#E2F2E8', '#1E6B43', 'ph-fill ph-check-circle') }, dinner];
+    else if (kept) planItems = [anchor, ferry, dinner];
+    else if (v === 'timeline') planItems = [
+      { ...anchor, ...tag('Anchor · stays', '#E3EEF0', T, 'ph-fill ph-push-pin') },
+      { ...ferry, titleDecor: 'line-through', titleColor: '#6B7B80', ...tag('Moves out', '#EEEAE3', '#55686E', 'ph ph-arrow-bend-up-left') },
+      { ...ago, rowBg: '#FFF1EA', rowBorder: '#FF6B35', ...tag('Moves in', '#FFD9C7', '#7A2A0A', 'ph ph-arrow-bend-down-right') },
+      { ...dinner, ...tag('Stays', '#E3EEF0', T, 'ph ph-check') }];
+    else planItems = [anchor, { ...ferry, ...tag('Snow risk', '#FFF4CC', '#6B5200', 'ph-fill ph-warning') }, dinner];
+    // Budget
+    const defs = [
+      { id: 's1', icon: 'ph ph-train', title: 'Airport express, not a taxi, on day 10', meta: 'UP Express · 25 min to Pearson', save: 52 },
+      { id: 's2', icon: 'ph ph-coffee', title: 'Café by your anchor for 6 breakfasts', meta: 'Instead of the hotel breakfast', save: 78 },
+      { id: 's3', icon: 'ph ph-storefront', title: 'Kensington Market food walk on Saturday', meta: 'Instead of the tasting menu', save: 95 }];
+    const saved = defs.filter(d => s.swaps.includes(d.id)).reduce((a, d) => a + d.save, 0);
+    const cap = 2500, spent = 1140, remaining = cap - spent, proj = 2640 - saved, over = proj > cap;
+    const projText = proj > 2600 ? 'At this pace you hit your cap on day 9. Three swaps get you back.' : proj > 2540 ? 'Now you’d hit your cap on day 10. One more swap helps.' : over ? `Almost there: ${fmt(proj - 2500)} over on the last day.` : `Back on track, with ${fmt(2500 - proj)} to spare.`;
+    const projDelta = over ? `+${fmt(proj - cap)} over` : proj === cap ? 'At cap' : `${fmt(cap - proj)} left`;
+    const swaps = defs.map(d => { const on = s.swaps.includes(d.id); return { ...d, selected: on, selectedClass: on ? 'selected' : '', actionLabel: on ? 'Added' : 'Add', saveFmt: fmt(d.save), icon: on ? 'ph-fill ph-check-circle' : d.icon, onClick: () => this.setState(st => ({ swaps: on ? st.swaps.filter(x => x !== d.id) : [...st.swaps, d.id] })) }; });
+    const status = over ? { label: 'Watch', bg: '#FFE0D3', color: '#B64025', icon: 'ph-fill ph-warning' } : { label: 'On track', bg: '#D8F5E8', color: '#18714D', icon: 'ph-fill ph-check-circle' };
+    const savingsLabel = saved ? `${fmt(saved)} saved` : `Save up to ${fmt(defs.reduce((a, d) => a + d.save, 0))}`;
+    const swapSummary = saved ? `${s.swaps.length} selected · ${fmt(saved)} saved` : 'Choose a swap to lower your forecast';
+    const pieCenterX = 100, pieCenterY = 48, pieRadiusX = 76, pieRadiusY = 42, pieDepth = 19;
+    const spentAngle = spent / cap * 360, spentEndAngle = -90 + spentAngle;
+    const piePoint = (angle, drop = 0) => { const rad = angle * Math.PI / 180; return { x: +(pieCenterX + pieRadiusX * Math.cos(rad)).toFixed(2), y: +(pieCenterY + pieRadiusY * Math.sin(rad) + drop).toFixed(2) }; };
+    const piePointText = p => `${p.x} ${p.y}`;
+    const pieSectorPath = (start, end) => { const first = piePoint(start), last = piePoint(end), large = end - start > 180 ? 1 : 0; return `M ${pieCenterX} ${pieCenterY} L ${piePointText(first)} A ${pieRadiusX} ${pieRadiusY} 0 ${large} 1 ${piePointText(last)} Z`; };
+    const pieFrontRange = (start, end) => { for (let shift = -720; shift <= 720; shift += 360) { const a = Math.max(0, start + shift), b = Math.min(180, end + shift); if (b - a > .01) return [a, b]; } return null; };
+    const pieSidePath = (start, end) => { const range = pieFrontRange(start, end); if (!range) return ''; const [a, b] = range, firstTop = piePoint(a), firstBottom = piePoint(a, pieDepth), lastTop = piePoint(b), lastBottom = piePoint(b, pieDepth), large = b - a > 180 ? 1 : 0; return `M ${piePointText(firstTop)} L ${piePointText(firstBottom)} A ${pieRadiusX} ${pieRadiusY} 0 ${large} 1 ${piePointText(lastBottom)} L ${piePointText(lastTop)} A ${pieRadiusX} ${pieRadiusY} 0 ${large} 0 ${piePointText(firstTop)} Z`; };
+    const pieSplitPoint = piePoint(spentEndAngle), pieSplitWall = `M ${pieCenterX} ${pieCenterY} L ${piePointText(pieSplitPoint)} L ${pieSplitPoint.x} ${(pieSplitPoint.y + pieDepth).toFixed(2)} L ${pieCenterX} ${pieCenterY + pieDepth} Z`;
+    const pieSpentTop = pieSectorPath(-90, spentEndAngle), pieAvailableTop = pieSectorPath(spentEndAngle, 270);
+    const pieSpentSide = pieSidePath(-90, spentEndAngle), pieAvailableSide = pieSidePath(spentEndAngle, 270);
+    // Nearby
+    const icons = { hospital: 'ph ph-first-aid', pharmacy: 'ph ph-pill', embassy: 'ph ph-flag', atm: 'ph ph-money', worship: 'ph ph-hands-praying' };
+    const worshipPlaces = { Anglican: ['St. James Cathedral', 'Anglican · King St E', 2.0], Catholic: ['St. Michael’s Cathedral Basilica', 'Catholic · Bond St', 2.3], Jewish: ['Kiever Synagogue', 'Jewish · Kensington Market', 1.6], Muslim: ['Jami Mosque', 'Muslim · Boustead Ave', 4.2] };
+    const all = [
+      { id: 'atm', cat: 'atm', name: 'Bank ATM, Spadina Ave', meta: 'No card fee for your bank', address: 'Spadina Ave · King West', hours: 'Open 24 hours', km: 0.12, x: 138, y: 124, shortLabel: 'ATM' },
+      { id: 'pharmacy', cat: 'pharmacy', name: 'Pharmacy, King St W', meta: '', address: 'King St W · near your hotel', hours: 'Open until 22:00', km: 0.35, x: 214, y: 96, shortLabel: 'PHARMACY' },
+      { id: 'hospital', cat: 'hospital', name: 'St. Michael’s Hospital', meta: 'Emergency department', address: 'Downtown Toronto', hours: 'Emergency · 24 hours', km: 1.4, x: 278, y: 58, shortLabel: 'ER' },
+      { id: 'embassy', cat: 'embassy', name: 'British Consulate-General', meta: 'Consular services', address: '777 Bay St', hours: 'By appointment', km: 2.1, x: 238, y: 22, shortLabel: 'CONSULATE' }];
+    if (s.worship) { const w = worshipPlaces[s.tradition]; all.push({ id: 'worship', cat: 'worship', name: w[0], meta: w[1], address: w[1].split(' · ').pop(), hours: 'Check current hours', km: w[2], x: 300, y: 128, shortLabel: 'WORSHIP' }); }
+    const act = all.filter(p => s.cats.includes(p.cat) || p.cat === 'worship').sort((a, b) => a.km - b.km);
+    const nearbyDistance = km => km < 1 ? Math.round(km * 1000) + ' m' : km.toFixed(1) + ' km';
+    const nearbyWalk = km => `~${Math.max(2, Math.ceil(km * 12))} min walk`;
+    const selectedPlaceData = act.find(p => p.id === s.selectedPlace) || null;
+    const routePreviewActive = !!selectedPlaceData && s.routeToPlace === selectedPlaceData.id;
+    const selectedRoutePoints = selectedPlaceData ? `${selectedPlaceData.x},${selectedPlaceData.y} ${Math.round((selectedPlaceData.x + 180) / 2)},${selectedPlaceData.y} ${Math.round((selectedPlaceData.x + 180) / 2)},118 180,118` : '';
+    const routeMainPoints = routePreviewActive ? selectedRoutePoints : s.night ? '44,62 44,102 116,102 116,118 180,118' : '44,62 124,62 180,118';
+    const routeAltPoints = routePreviewActive ? '' : s.night ? '44,62 124,62 180,118' : '44,62 44,102 116,102 116,118 180,118';
+    const places = act.map(p => ({ id: p.id, name: p.name, meta: p.meta, address: p.address, hours: p.hours, icon: icons[p.cat], dist: nearbyDistance(p.km), walkLabel: nearbyWalk(p.km), selected: p.id === s.selectedPlace, selectedClass: p.id === s.selectedPlace ? 'selected' : '', onClick: () => this.setState({ selectedPlace: p.id, routeToPlace: null }) }));
+    const pins = act.map(p => ({ id: p.id, x: p.x, y: p.y, icon: icons[p.cat], label: p.name, shortLabel: p.shortLabel, selected: p.id === s.selectedPlace, selectedClass: p.id === s.selectedPlace ? 'selected' : '', walkLabel: nearbyWalk(p.km), onClick: () => this.setState({ selectedPlace: p.id, routeToPlace: null }) }));
+    const chipDefs = [['hospital', 'Hospital'], ['pharmacy', 'Pharmacy'], ['embassy', 'Consulate'], ['atm', 'ATM']];
+    const chips = chipDefs.map(([id, label]) => { const on = s.cats.includes(id); return { label: `${label} · ${all.filter(p => p.cat === id).length}`, icon: icons[id], selected: on, activeClass: on ? 'active' : '', lockedClass: '', hasDialog: 'false', onClick: () => this.setState(st => { const remove = st.cats.includes(id); const selected = all.find(p => p.id === st.selectedPlace); return { cats: remove ? st.cats.filter(c => c !== id) : [...st.cats, id], selectedPlace: remove && selected?.cat === id ? null : st.selectedPlace, routeToPlace: remove && selected?.cat === id ? null : st.routeToPlace }; }) }; });
+    chips.push({ label: `Place of worship${s.worship ? ' · 1' : ''}`, icon: s.worship ? icons.worship : 'ph ph-lock-simple', selected: s.worship, activeClass: s.worship ? 'active' : '', lockedClass: s.worship ? '' : 'locked', hasDialog: 'true', onClick: () => this.setState({ sheet: 'consent', draftTrad: s.tradition }) });
+    const map = s.night ? { bg: '#18323B', street: 'rgba(255,255,255,.07)', lake: '#0F2830', label: '#DDE8E6' } : { bg: '#ECE7DE', street: 'rgba(16,38,45,.09)', lake: '#CFE3E6', label: '#557074' };
+    const routeTitle = routePreviewActive ? 'Preview walk to your hotel' : s.night ? 'Prefer well-lit streets' : 'Shortest walk home';
+    const routeSummary = routePreviewActive ? `Illustrative preview · ${nearbyWalk(selectedPlaceData.km)} from ${selectedPlaceData.name}. Confirm directions in a maps app.` : s.night ? '~22 min from dinner · 3 min longer · 86% marked lit.' : '~19 min from dinner · lighting details remain in route notes.';
+    const routeToggleLabel = s.night ? 'Turn off well-lit street preference' : 'Prefer well-lit streets';
+    const mapCaption = routePreviewActive ? 'ILLUSTRATIVE ROUTE PREVIEW' : s.night ? 'LIT-STREET OPTION · 22 MIN' : 'SHORTEST OPTION · 19 MIN';
+    const selectedPlace = selectedPlaceData ? { ...selectedPlaceData, hasMeta: !!selectedPlaceData.meta, icon: icons[selectedPlaceData.cat], dist: nearbyDistance(selectedPlaceData.km), walkLabel: nearbyWalk(selectedPlaceData.km) } : {};
+    const placeCount = `${act.length} ${act.length === 1 ? 'place' : 'places'}`;
+    const sw = on => ({ track: on ? T : '#C9C2B6', knob: on ? '24px' : '4px' });
+    const traditions = Object.keys(worshipPlaces).map(k => { const on = s.draftTrad === k; return { label: k, bg: on ? T : '#fff', color: on ? '#fff' : T, border: on ? T : '#D9D3C8', onClick: () => this.setState({ draftTrad: k }) }; });
+    // Shaper
+    const p = s.party, fl = [450 * p, 620 * p], st = [800 * (1 + .4 * (p - 1)), 1200 * (1 + .4 * (p - 1))], ac = [600 * p, 850 * p];
+    const lo = fl[0] + st[0] + ac[0], hi = fl[1] + st[1] + ac[1];
+    const rng = r => fmt(r[0]) + '–' + fmt(r[1]).slice(1);
+    return {
+      tabs, isShape: s.tab === 'shape', isToday: s.tab === 'today', isBudget: s.tab === 'budget', isNearby: s.tab === 'nearby', isTrip: s.tab === 'trip',
+      isBeforeFlight: s.tab === 'today' && todayStage === 'before-flight', isAfterTrip: s.tab === 'today' && todayStage === 'after-trip', isPlanA: s.tab === 'today' && todayStage === 'plan-a', isPlanB: s.tab === 'today' && todayStage === 'plan-b',
+      todayStageLabel: ({ 'before-flight': 'BEFORE FLIGHT', 'after-trip': 'AFTER TRIP', 'plan-a': 'PLAN A', 'plan-b': 'PLAN B' })[todayStage] || 'PLAN A', deviceClass: 'device-' + device, localTime, ratingRows,
+      demoClockTime: isEveningDemo ? '20:00' : '10:14', isEveningDemo,
+      agoHeart: savedPlaces.includes('ago') ? '♥' : '♡', agoFavoriteLabel: savedPlaces.includes('ago') ? 'Remove Art Gallery of Ontario from saved places' : 'Save Art Gallery of Ontario', marketHeart: savedPlaces.includes('market') ? '♥' : '♡', marketFavoriteLabel: savedPlaces.includes('market') ? 'Remove Kensington Market from saved places' : 'Save Kensington Market', islandsHeart: savedPlaces.includes('islands') ? '♥' : '♡', islandsFavoriteLabel: savedPlaces.includes('islands') ? 'Remove Toronto Islands from saved places' : 'Save Toronto Islands',
+      showPlanBApproval: approved, showPlanAKept: kept, planBActionLabel: approved ? 'Plan B is live ✓' : 'Approve Plan B', keepAActionLabel: kept ? 'Plan A kept ✓' : 'Keep Plan A',
+      offline: s.offline, online: !s.offline,
+      showSignal: !approved, showDiffCard: v === 'card' && proposed, kept, planItems,
+      showReflowBar: v === 'timeline' && proposed && s.tab === 'today',
+      showToast: approved && s.tab === 'today',
+      approve: () => this.setState({ pivot: 'approved', sheet: null }), keepA: () => this.setState({ pivot: 'kept' }), reopen: () => this.setState({ pivot: 'proposed' }), undo: () => this.setState({ pivot: 'proposed' }),
+      openWhySnow: () => this.setState({ sheet: 'whySnow' }), openFeedback: () => this.setState({ sheet: 'rating', feedbackSent: false }), sendFeedback: () => this.setState({ feedbackSent: true }), startFirstDay: () => this.setState({ todayStage: 'plan-a' }), toggleAgoFavorite: () => this.setState(st => ({ savedPlaces: st.savedPlaces.includes('ago') ? st.savedPlaces.filter(x => x !== 'ago') : [...st.savedPlaces, 'ago'] })), toggleMarketFavorite: () => this.setState(st => ({ savedPlaces: st.savedPlaces.includes('market') ? st.savedPlaces.filter(x => x !== 'market') : [...st.savedPlaces, 'market'] })), toggleIslandsFavorite: () => this.setState(st => ({ savedPlaces: st.savedPlaces.includes('islands') ? st.savedPlaces.filter(x => x !== 'islands') : [...st.savedPlaces, 'islands'] })), openWhyWalk: () => this.setState({ sheet: 'whyWalk' }), openPacket: () => this.setState({ sheet: 'packet' }), closeSheet: () => this.setState({ sheet: null }),
+      hasSheet: !!s.sheet, sheetRating: s.sheet === 'rating', feedbackSent: s.feedbackSent, feedbackNotSent: !s.feedbackSent, sheetWhySnow: s.sheet === 'whySnow', sheetWhyWalk: s.sheet === 'whyWalk', sheetConsent: s.sheet === 'consent', sheetPacket: s.sheet === 'packet',
+      projText, projFmt: fmt(proj), spentFmt: fmt(spent), capFmt: fmt(cap), remainingFmt: fmt(remaining), pieSpentTop, pieAvailableTop, pieSpentSide, pieAvailableSide, pieSplitWall, projDelta, budgetDeltaClass: over ? 'over' : proj === cap ? 'at-cap' : 'under', savingsLabel, swapSummary, swaps, status,
+      night: s.night, map, pins, places, chips, hasPlaces: places.length > 0, noPlaces: places.length === 0, placeCount, selectedPlace, hasSelectedPlace: !!selectedPlaceData, routeMainPoints, routeAltPoints, routeTitle, routeSummary, routeToggleLabel, mapCaption, selectedRouteLabel: routePreviewActive ? 'Clear route preview' : 'Preview walk to hotel', selectedRouteAction: () => this.setState({ routeToPlace: routePreviewActive ? null : s.selectedPlace }), resetNearbyFilters: () => this.setState({ cats: ['hospital','pharmacy','embassy','atm'], selectedPlace: null, routeToPlace: null }), toggleNight: () => this.setState({ night: !s.night }), nightTrack: sw(s.night).track, nightKnob: sw(s.night).knob,
+      traditions, visTrack: sw(s.agentVis).track, visKnob: sw(s.agentVis).knob, toggleAgentVis: () => this.setState({ agentVis: !s.agentVis }),
+      worshipOn: s.worship, worshipOffNow: !s.worship, worshipCta: s.worship ? 'Save' : 'Turn on',
+      worshipSave: () => this.setState({ worship: true, tradition: s.draftTrad, sheet: null }), worshipOff: () => this.setState({ worship: false, agentVis: false, sheet: null }),
+      toggleOffline: () => this.setState({ offline: !s.offline }), offTrack: sw(s.offline).track, offKnob: sw(s.offline).knob,
+      partyLabel: p === 1 ? '1 traveler' : p + ' travelers', partyUp: () => this.setState({ party: Math.min(6, p + 1), sent: false }), partyDown: () => this.setState({ party: Math.max(1, p - 1), sent: false }),
+      estFlights: rng(fl), estStay: rng(st), estAct: rng(ac), estTotal: rng([lo, hi]), estCap: fmt(Math.round((lo + hi) / 2 * 1.1 / 100) * 100),
+      sent: s.sent, notSent: !s.sent, sendLead: () => this.setState({ sent: true })
+    };
+  }
+}
+</script>
+</body>
+</html>
