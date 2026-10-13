@@ -36,6 +36,8 @@ body{margin:0;background:#EFEAE2;overflow-x:hidden}a{color:#004E64}a:hover{color
 #1c{display:flex;flex-direction:column;gap:16px;width:min(100%,1280px);margin-top:8px}
 #1c>div{display:flex;gap:10px;align-items:center}
 #1c>span{font-size:14px;color:#55686E;line-height:1.45}
+#secondaryScreens{display:flex;flex-direction:column;gap:12px;width:min(100%,1280px);margin-top:24px}
+#secondaryScreens>p{max-width:780px;margin:0;color:#55686E;font-size:14px;line-height:1.45}
 @media(max-width:900px){
  .prototype-section{padding:28px 20px 64px;gap:22px}
  .prototype-intro h1{font-size:clamp(30px,5vw,40px)}
@@ -100,6 +102,11 @@ body{margin:0;background:#EFEAE2;overflow-x:hidden}a{color:#004E64}a:hover{color
       <div class="today-screen-heading"><span>1c</span><span>Agent console and Duty-of-Care view</span></div>
       <span style="font-size:14px;color:#55686E;line-height:1.45">Agents approve or take over. A corporate travel manager’s bulk action still becomes one change per traveler, and each traveler approves their own.</span>
       <dc-import name="Console" hint-size="1280px,820px"></dc-import>
+    </div>
+    <div id="secondaryScreens">
+      <div class="today-screen-heading"><span>02</span><span>Secondary traveler screens</span></div>
+      <p>Agency-branded entry, account and consent, profile, settings, and recovery states. These screens follow the same trip and trust rules as the primary prototype.</p>
+      <dc-import name="Secondary" hint-size="1280px,980px"></dc-import>
     </div>
   </div>
 </section>
